@@ -1,0 +1,75 @@
+.accounts {
+    margin: 6% 0;
+
+    &_wrapper {
+        @include flex-container;
+        align-items: stretch;
+    }
+}
+
+.account {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 20px;
+    padding: 1.4rem;
+    border-radius: .6rem;
+    background: #fff;
+    text-align: center;
+    min-width: 215px;
+
+    figure {
+        height: 150px;
+        display: flex;
+        align-items: center;
+    }
+    
+    &_upper-text {
+        margin-top: 1rem;
+
+        span {
+            white-space: nowrap;
+            line-height: 1.5;
+            font-size: .8rem;
+            font-weight: bold;
+            &::first-line {
+                font-size: .9rem;
+            }
+        }
+        
+        b {
+            display: inline-block;
+            margin-top: 1.4rem;
+            margin-bottom: 1.6rem;
+            font-weight: bolder;
+            font-size: 1.7rem;
+        }
+    }
+
+    &_lower-text {
+        font-size: .9rem;
+        flex: 1 0 auto;
+        font-weight: lighter;
+        line-height: 1.5;
+    }
+
+    .quantity-btns-wrapper {
+        margin: 1.5rem 0 1.1rem 0;
+    }
+
+    &_actions {
+        width: 95%;
+        button {
+            @include btn-blue;
+            font-size: .9rem;
+            padding: .8rem 0;
+            width: 95%;
+
+            &.outOfStock {
+                background: $gray2;
+                color: $darkGray2;
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+.payment {
+
+    figure:last-of-type {
+        .payment-method {
+            margin: 0;
+        }
+    }
+
+    &_methods-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &-method {
+        margin-right: 20px;
+
+        &.active {
+            .payment-method_img-wrapper {
+                background: #fff;
+                @include blackish_shadow(70px, -30px, .6);
+            }
+        }
+
+        figcaption {
+            text-align: center;
+            margin-top: .8rem;
+            font-size: .85rem;
+            font-weight: bold;
+        }
+    }
+
+    &-method_img-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1.5rem;
+        background: #EBEAED;
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
+
+        img:nth-of-type(2) {
+            display: block;
+            margin-top: 1rem;
+        }
+    }
+
+
+}

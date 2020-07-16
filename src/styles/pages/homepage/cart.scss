@@ -1,0 +1,49 @@
+.cart {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 450px;
+    @include blackish_shadow;
+    
+    h3 {
+        font-size: 1.3rem;
+        font-weight: bold;
+        text-align: center;
+        padding-top: 3rem;
+    }
+
+    &_empty-text {
+        color: $gray;
+        font-size: 1.1rem;
+        text-align: center;
+
+        small {
+            display: inline-block;
+            margin-top: .8rem;
+            font-size: 1rem;
+            font-weight: lighter;
+        }
+    }
+
+    &_checkout {
+        padding: 0 2rem;
+        padding-bottom: 2rem;
+
+        &-separator {
+            border-top: 2px solid lighten($gray, .2);
+        }
+
+        p {
+            margin: 1.5rem 0;
+            font-weight: bolder;
+        }
+
+        button {
+            @include btn-blue(100%);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            padding: 1.2rem 14px;
+        }
+    }
+}

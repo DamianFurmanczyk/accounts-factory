@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'accounts-factory';
+  elo = ['RU', 'OCE', 'JP', 'EUNE', 'EUW', 'NA', 'LAS', 'BR', 'TR'];
+  siemka = [1,2,3,4,5];
 }

@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'styles/colors';
+@import 'styles/typography';
+@import 'styles/mixins/';
+@import 'styles/normalize.scss';
+
+body {
+    font-family: 'Poppins';
+    color: $black;
+    // padding-top: 95px;
+}
+
+.quantity-btns-wrapper {
+    @include qtity_btns;
+}
+
+@import 'styles/pages/';
+@import 'styles/shared/';

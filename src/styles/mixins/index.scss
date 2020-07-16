@@ -1,0 +1,18 @@
+@import './elements.scss';
+@import './blocks.scss';
+
+.checkout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    min-width: calc(100vw - 450px);
+
+    &_heading {
+        font-size: 1.7rem;
+        font-weight: bolder;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+}
