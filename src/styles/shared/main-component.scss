@@ -3,7 +3,9 @@
     width: 100%;
     
     &_main-content {
-        flex: 1;
         background: $whitish;
+        position: relative;
+        padding-top: 95px;
+        flex: 1;
     }
 }

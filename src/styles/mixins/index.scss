@@ -14,5 +14,10 @@
         font-weight: bolder;
         text-align: center;
         margin-bottom: 2rem;
+
+        &--last {
+            font-size: 1.4rem;
+            margin-bottom: 1.7rem;
+        }
     }
 }

@@ -7,11 +7,15 @@
 body {
     font-family: 'Poppins';
     color: $black;
-    // padding-top: 95px;
 }
 
 .quantity-btns-wrapper {
     @include qtity_btns;
+
+    &--cart {
+        width: 5rem;
+        margin-right: -2rem;
+    }
 }
 
 @import 'styles/pages/';

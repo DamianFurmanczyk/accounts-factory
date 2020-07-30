@@ -1,5 +1,7 @@
 .cart {
     height: 100vh;
+    position: relative;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -31,12 +33,22 @@
         padding-bottom: 2rem;
 
         &-separator {
-            border-top: 2px solid lighten($gray, .2);
+            border-top: 2px solid lighten($gray, 10%);
         }
 
-        p {
-            margin: 1.5rem 0;
+        &-cost {
+            margin: 1.8rem 0;
             font-weight: bolder;
+        }
+
+        &-redeem-coupon {
+            margin: 1.8rem 0;
+            font-weight: bolder;
+            font-size: .9rem;
+            span {
+                color: $blue;
+                float: right;
+            }
         }
 
         button {
@@ -46,4 +58,50 @@
             padding: 1.2rem 14px;
         }
     }
+
+    &_order-list {
+        margin-top: 2rem;
+
+        .quantity {
+            display: inline-block;
+            margin-right: 1rem;
+            color: $darkGray
+        }
+
+        small {
+            display: inline-block;
+            color: $gray;
+            font-size: .85rem;
+            margin-top: .4rem;
+        }
+
+        p {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-item {
+            .price {
+                margin-right: -1.2rem;
+            }
+
+            .fa-trash {
+                font-size: 1.2rem;
+                color: $gray;
+                margin-left: -1.2rem;
+            }
+
+            display: flex;
+            justify-content: space-between;
+            width: calc(100% - 2rem);
+            padding: 0 1rem;
+            align-items: center;
+
+            .item-desc {
+                display: flex;
+                margin-bottom: -1.6rem;
+            }
+        }
+    }
+
 }

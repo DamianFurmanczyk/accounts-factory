@@ -1,0 +1,51 @@
+.main-footer {
+    background: #fff;
+    padding: 3% 0 3% 6%;
+    &_content-wrapper {
+        @include flex-container;
+        max-width: 1050px;
+        align-items: center;
+        margin: 0;
+    }
+
+    &_faq {
+        font-weight: 600;
+
+        h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.4rem;
+        }
+        dt {
+            line-height: 2.3;
+            font-size: .85rem;
+            letter-spacing: .5px;
+        }
+    }
+
+    &_links-list {
+        margin-top: -.5rem;
+        letter-spacing: .5px;
+        font-weight: 600;
+        line-height: 3;
+        font-size: 1.15rem;
+    }
+
+    figure {
+        margin-top: -2rem;
+        width: 200px;
+        img {
+            display: block;
+            margin-bottom: .8rem;
+        }
+        figcaption {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: .8rem;
+        }
+        p {
+            color: $gray3;
+            font-size: .8rem;
+            line-height: 1.6;
+        }
+    }
+}

@@ -1,0 +1,123 @@
+.nav {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    &_currency-dropdown, &_link {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
+
+    &_link--dropdown {
+        margin-left: calc(2.4rem - 14px) !important;
+        padding: 12px 14px;
+        transition: background .2s;
+        width: 130px;
+        ul {
+            transition: opacity .2s;
+            opacity: 0;
+            pointer-events: none;
+            background: transparentize(lighten($darkGray3, 37%), .2);
+            width: 130px;
+            padding: 12px 14px;
+            color: $black;
+            left: 0;
+            font-weight: 700;
+            padding-top: .3rem;
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+    }
+
+    &_link--dropdown:hover {
+        background: transparentize(lighten($darkGray3, 37%), .2);
+        ul {
+            display: block;
+            opacity: 1;
+            pointer-events: all;
+        }
+
+    }
+
+    &_currency-dropdown, &_link--dropdown {
+        padding: 12px 14px;
+        border-top-left-radius: .8rem;
+        border-top-right-radius: .8rem;
+        z-index: 100;
+        position: relative;
+        ul {
+            position: absolute;
+            top: 100%;
+            border-bottom-left-radius: .8rem;
+            border-bottom-right-radius: .8rem;
+        }
+    }
+
+    &_currency-dropdown {
+        cursor: pointer;
+        padding: 12px 18px;
+        background: #fff;
+        border-radius: .8rem;
+        .fa {
+            font-size: .8rem;
+            display: inline-block;
+            margin-left: .4rem;
+            vertical-align: .2rem;
+        }
+
+        ul {
+            display: none;
+            background: #fff;
+            right: 0;
+            left: 0;
+            font-size: 1.1rem;
+            padding: 0 18px 8px 18px;
+            line-height: 1.55;
+        }
+    }
+
+    &_currency-dropdown:hover {
+        .fa {
+            transform: rotate(180deg);
+        }
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        ul {
+            display: block;
+        }
+    }
+
+    &_link {
+        cursor: pointer;
+        &.active {
+            color: $black;
+        }
+        color: $gray3;
+        margin-left: 2.4rem;
+    }
+    
+    &_links-list {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        justify-content: space-between;
+    }
+
+    &_content-wrapper {
+        display: flex;
+        width: 80%;
+        align-items: center;
+        margin-right: 3rem;
+        height: 130px;
+    }
+
+    &_ulNdropdown {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        justify-content: space-between;
+    }
+}

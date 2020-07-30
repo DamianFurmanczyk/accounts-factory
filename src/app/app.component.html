@@ -1,161 +1,301 @@
-  <!-- <nav class="nav">
-    <figure class="nav_logo"></figure>
-  </nav> -->
-  <main class="main-comp">
-  
-    <div class="main-comp_main-content">
 
-      <section class="checkout">
-        <form class="identity-form">
 
-          <h3 class="checkout_heading">Identity</h3>
+<main class="main-comp">
 
-          <label for="name">Full Name</label>
-          <input id="name" type="text">
-
-          <label for="email">Email</label>
-          <input id="email" type="email">
-
-          <label for="country">Country</label>
-          <select id="country">
-            <option selected>siema</option>
-          </select>
-
-          <label for="vat">VAT</label>
-          <select id="vat">
-            <option selected>siema</option>
-          </select>
-          <small> *NOT NEEDED</small>
-        </form>
-
-        <section class="payment">
-          <h3 class="checkout_heading">Select payment method</h3>
-          
-          <div class="payment_methods-wrapper">
-
-            <figure class="payment-method active">
-              <div class="payment-method_img-wrapper">
-                <img src="assets/img/visa.svg" alt="Credit card">
-                <img src="assets/img/mastercard.svg" alt="Credit card">
-              </div>
-              <figcaption>
-                Credit card
-              </figcaption>
-            </figure>
-            <figure class="payment-method">
-              <div class="payment-method_img-wrapper">
-                <img src="assets/img/payment-bank-transfer.svg" alt="Bank transfer">
-              </div>
-              <figcaption>
-                Bank transfer
-              </figcaption>
-            </figure>
-            <figure class="payment-method">
-              <div class="payment-method_img-wrapper">
-                <img src="assets/img/paypal.svg" alt="Paypal">
-              </div>
-              <figcaption>
-                Paypal
-              </figcaption>
-            </figure>
-            <figure class="payment-method">
-              <div class="payment-method_img-wrapper">
-                <img src="assets/img/visa.svg" alt="Cryptocurrency">
-              </div>
-              <figcaption>
-                Cryptocurrency
-              </figcaption>
-            </figure>
-
+  <div class="main-comp_main-content">
+    <nav class="nav">
+      <div class="nav_content-wrapper">
+        <figure class="nav_logo">
+          <img src="assets/img/JP.png" alt="Accounts Factory logo">
+        </figure>
+    
+        <div class="nav_ulNdropdown">
+          <ul class="nav_links-list">
+    
+            <li class="nav_link">Home</li>
+            <li class="nav_link active">Bulk</li>
+            <li class="nav_link nav_link--dropdown">
+              More
+              <ul>
+                <li>TOS</li>
+                <li>Privacy policy</li>
+                <li>Home</li>
+              </ul>
+            </li>
+      
+          </ul>
+    
+          <div class="nav_currency-dropdown">
+            PLN
+            <span class="fa fa-chevron-down"></span>
+            <ul>
+              <li>EUR</li>
+              <li>USD</li>
+              <li>GBP</li>
+            </ul>
           </div>
-
-        </section>
-
-      </section>
-
-      <section *ngIf="false" class="hero">
-        <div class="hero_content-wrapper">
-          <h1>
-            If you want to buy a lot of accounts go to
-          </h1>
-          <br>
-          <button>Bulk</button>
         </div>
+    
+      </div>
+    </nav>
+  <section class="bulk">
+    <div class="regions-stats-wrapper">
+      <div *ngFor="let item of [1,1,1,1,1,1,1,1,1,1]" class="region-stats">
+
+        <figure>
+          <img src="assets/img/RU.png">
+          <figcaption>
+            RU
+          </figcaption>
+        </figure>
+  
+        <div *ngFor="let item of [1,1,1,1]" class="region-stats_stat">
+          <span class="region-stats_stat-essence">
+            40k 
+          </span>
+          <div class="region-stats_stat-box">
+            0
+          </div>
+          <ul class="region-stats_stat-list">
+            <li>$1.5</li>
+            <li>$1.4</li>
+            <li>$1</li>
+          </ul>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+
+    <section *ngIf="false" class="checkout">
+      <form class="identity-form">
+
+        <h3 class="checkout_heading">Identity</h3>
+
+        <label for="name">Full Name</label>
+        <input id="name" type="text">
+
+        <label for="email">Email</label>
+        <input id="email" type="email">
+
+        <label for="country">Country</label>
+        <select id="country">
+          <option selected>siema</option>
+        </select>
+
+        <label for="vat">VAT</label>
+        <select id="vat">
+          <option selected>siema</option>
+        </select>
+        <small> *NOT NEEDED</small>
+      </form>
+
+      <section class="payment">
+        <h3 class="checkout_heading checkout_heading--last">Select payment method</h3>
+
+        <div class="payment_methods-wrapper">
+
+          <figure class="payment-method active">
+            <div class="payment-method_img-wrapper">
+              <img src="assets/img/visa.svg" alt="Credit card">
+              <img src="assets/img/mastercard.svg" alt="Credit card">
+            </div>
+            <figcaption>
+              Credit card
+            </figcaption>
+          </figure>
+          <figure class="payment-method">
+            <div class="payment-method_img-wrapper">
+              <img src="assets/img/payment-bank-transfer.svg" alt="Bank transfer">
+            </div>
+            <figcaption>
+              Bank transfer
+            </figcaption>
+          </figure>
+          <figure class="payment-method">
+            <div class="payment-method_img-wrapper">
+              <img src="assets/img/paypal.svg" alt="Paypal">
+            </div>
+            <figcaption>
+              Paypal
+            </figcaption>
+          </figure>
+          <figure class="payment-method">
+            <div class="payment-method_img-wrapper">
+              <img src="assets/img/visa.svg" alt="Cryptocurrency">
+            </div>
+            <figcaption>
+              Cryptocurrency
+            </figcaption>
+          </figure>
+
+        </div>
+
       </section>
+
+    </section>
+
+    <section *ngIf="false" class="hero">
+      <div class="hero_content-wrapper">
+        <h1>
+          If you want to buy a lot of accounts go to
+        </h1>
+        <br>
+        <button>Bulk</button>
+      </div>
+    </section>
 
     <section *ngIf="false" class="regions">
-        <h2>Choose your region</h2>
+      <h2>Choose your region</h2>
 
-        <div class="regions_wrapper">
-          
-          <figure class="region" *ngFor="let region of elo">
-              <figcaption>
-                  {{region}}
-              </figcaption>
-  
-              <img [src]="'assets/img/' + region + '.png'" [alt]="region">
+      <div class="regions_wrapper">
+
+        <figure class="region" *ngFor="let region of elo">
+          <figcaption>
+            {{region}}
+          </figcaption>
+
+          <img [src]="'assets/img/' + region + '.png'" [alt]="region">
+        </figure>
+
+      </div>
+    </section>
+
+    <section *ngIf="false" class="accounts">
+
+      <div class="accounts_wrapper">
+
+        <div class="account" *ngFor="let acc of siemka">
+          <figure>
+            <img [src]="'assets/img/essence' + acc + '.svg'" alt="essence_img">
           </figure>
-  
-        </div>
-      </section>
 
-      <section *ngIf="false" class="accounts">
+          <p class="account_upper-text">
+            <span>BASIC <br>
+              30 lvl instant delivery
+            </span>
+            <br>
+            <b>20 zl</b>
+          </p>
 
-        <div class="accounts_wrapper">
+          <p class="account_lower-text">
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut.
+          </p>
 
-            <div class="account" *ngFor="let acc of siemka">
-                    <figure>
-                        <img [src]="'assets/img/essence' + acc + '.svg'" alt="essence_img">
-                    </figure>
+          <!-- oddzielny komponent z input i output, w reactcie to bylby dummy -->
+          <div class="quantity-btns-wrapper">
+            <button>-</button>
+            1
+            <button>+</button>
+          </div>
 
-                    <p class="account_upper-text">
-                        <span>BASIC <br>
-                            30 lvl instant delivery
-                        </span>
-                        <br>
-                        <b>20 zl</b>
-                    </p>
-
-                    <p class="account_lower-text">
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut.
-                    </p>
-
-                    <!-- oddzielny komponent z input i output, w reactcie to bylby dummy -->
-                    <div class="quantity-btns-wrapper">
-                        <button>-</button>
-                        1
-                        <button>+</button>
-
-                    </div>
-
-                    <div class="account_actions">
-                        <button class="outOfStock">Out of stock</button>
-                        <button>Buy now</button>
-                    </div>
-                </div>
-
+          <div class="account_actions">
+            <button class="outOfStock">Out of stock</button>
+            <button>Buy now</button>
+          </div>
         </div>
 
-      </section>
+      </div>
 
-    </div>
-    
-    <aside class="cart">
+    </section>
+
+  </div>
+
+  <aside *ngIf="true" class="cart">
+
+    <div class="cart_top-side">
 
       <h3>Your Cart</h3>
 
-      <p class="cart_empty-text">Actually is nothing here <br>
+      <ul class="cart_order-list">
+
+        <li class="cart_order-list-item">
+          <div class="item-desc">
+           <span class="quantity">1x</span>
+           <p> First Item in cart
+            <small>Here is long Subtitle</small>
+           </p>
+          </div>
+
+          <div class="quantity-btns-wrapper quantity-btns-wrapper--cart">
+            <button>-</button>
+            <button>+</button>
+          </div>
+
+          <span class="price">$20.50</span>
+          <span class="fa fa-trash"></span>
+        </li>
+
+      </ul>
+
+    </div>
+
+
+
+    <!-- <p class="cart_empty-text">Actually is nothing here <br>
         <small>But you can change it</small>
+      </p> -->
+
+    <div class="cart_checkout">
+
+      <p class="cart_checkout-redeem-coupon">
+        Have a promo coupon?
+
+        <span>Redeem your coupon</span>
       </p>
 
-      <div class="cart_checkout">
-        <div class="cart_checkout-separator"></div>
-        <p>Total cost 
-          <span class="right">$0</span>
-        </p>
-        <button>Buy now</button>
-      </div>
+      <div class="cart_checkout-separator"></div>
+      <p class="cart_checkout-cost">Total cost
+        <span class="right">$0</span>
+      </p>
+      <button>Buy now</button>
+    </div>
 
-    </aside>
+  </aside>
 
-  </main>
+</main>
+
+<footer class="main-footer">
+  <div class="main-footer_content-wrapper">
+    <figure>
+      <img src="assets/img/RU.png" alt="Accounts Factory logo">
+      <figcaption>Accounts Factory</figcaption>
+      <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.</p>
+    </figure>
+
+    <div class="main-footer_faq">
+      <h4>FAQ</h4>
+      <ul>
+        <li>
+          <dt>1. Can I change account details?</dt>
+          <dd></dd>
+        </li>
+        <li>
+          <dt>2. I have not recived an account</dt>
+          <dd></dd>
+        </li>
+        <li>
+          <dt>3. What name will my account have?</dt>
+          <dd></dd>
+        </li>
+        <li>
+          <dt>4. My account got banned</dt>
+          <dd></dd>
+        </li>
+        <li>
+          <dt>5. How long does it take to deliver an account?</dt>
+          <dd></dd>
+        </li>
+      </ul>
+    </div>
+
+    <div class="main-footer_links-list">
+      <ul>
+        <li>Homepage </li>
+        <li>Therms and conditions  </li>
+        <li>Privacy policy </li>
+        <li>Contact </li>
+      </ul>
+    </div>
+  </div>
+</footer>
