@@ -1,0 +1,36 @@
+<nav class="nav">
+    <div class="nav_content-wrapper">
+        <figure routerLink="/" class="nav_logo">
+            <img src="assets/img/JP.png" alt="Accounts Factory logo">
+        </figure>
+
+        <div class="nav_ulNdropdown">
+            <ul class="nav_links-list">
+
+                <li routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav_link">Home</li>
+                <li routerLink="/bulk" routerLinkActive="active" class="nav_link">Bulk</li>
+                <li routerLink="/checkout" routerLinkActive="active" class="nav_link">Checkout</li>
+                <li routerLink="/tos" class="nav_link nav_link--dropdown">
+                    More
+                    <ul>
+                        <li routerLink="/tos">TOS</li>
+                        <li routerLink="/tos">Privacy policy</li>
+                        <li routerLink="/tos">Home</li>
+                    </ul>
+                </li>
+
+            </ul>
+
+            <div class="nav_currency-dropdown">
+                PLN
+                <span class="fa fa-chevron-down"></span>
+                <ul>
+                    <li>EUR</li>
+                    <li>USD</li>
+                    <li>GBP</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</nav>

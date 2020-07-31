@@ -1,0 +1,21 @@
+<main class="main-comp">
+    <div class="main-comp_main-content">
+
+        <app-nav></app-nav>
+
+        <app-homepage-ui 
+            [regions]="stateS.regions$ | async"
+            [accounts]="stateS.accounts$ | async"
+            (onRegionSelected)="stateS.updateAccountsBasedOnRegion($event)"
+            (addToCart)="cartS.addToCart($event)"
+            (removeFromCart)="cartS.removeFromCart($event)"
+            (changeOrderQuantity)="cartS.changeOrderQuantity($event)">
+        </app-homepage-ui>
+
+    </div>
+
+    <app-cart></app-cart>
+
+</main>
+
+<app-footer></app-footer>

@@ -59,6 +59,10 @@
         }
     }
 
+    .price {
+        margin-right: 1rem;
+    }
+
     &_order-list {
         margin-top: 2rem;
 
@@ -81,14 +85,11 @@
         }
 
         &-item {
-            .price {
-                margin-right: -1.2rem;
-            }
+            margin-bottom: 1.5rem;
 
             .fa-trash {
                 font-size: 1.2rem;
                 color: $gray;
-                margin-left: -1.2rem;
             }
 
             display: flex;
@@ -99,9 +100,20 @@
 
             .item-desc {
                 display: flex;
+                flex: 1;
+                max-width: 50%;
                 margin-bottom: -1.6rem;
             }
         }
     }
 
+}
+
+.quantity-btns-wrapper {
+    @include qtity_btns;
+
+    &--cart {
+        width: 5rem;
+        margin-right: 1rem;
+    }
 }

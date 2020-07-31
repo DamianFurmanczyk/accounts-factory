@@ -1,0 +1,5 @@
+<app-cart-ui [cart]="stateS.cart$ | async"
+    (addToCart)="cartS.addToCart($event)"
+    (removeFromCart)="cartS.removeFromCart($event)"
+    (changeOrderQuantity)="cartS.changeOrderQuantity($event)">
+</app-cart-ui>

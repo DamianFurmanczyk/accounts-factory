@@ -9,14 +9,5 @@ body {
     color: $black;
 }
 
-.quantity-btns-wrapper {
-    @include qtity_btns;
-
-    &--cart {
-        width: 5rem;
-        margin-right: -2rem;
-    }
-}
-
 @import 'styles/pages/';
 @import 'styles/shared/';

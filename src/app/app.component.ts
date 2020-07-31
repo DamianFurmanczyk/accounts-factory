@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
+import { StateService } from './core/services/state.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent {
-  elo = ['RU', 'OCE', 'JP', 'EUNE', 'EUW', 'NA', 'LAS', 'BR', 'TR'];
-  siemka = [1,2,3,4,5];
+  constructor(private stateS: StateService){
+    this.stateS.siema();
+  }
 }
