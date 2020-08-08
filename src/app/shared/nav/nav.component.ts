@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { StateService } from './../../core/services/state.service';
 
 @Component({
   selector: 'app-nav',
@@ -6,8 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {
+  @Input() homepageStyles = false;
 
-  constructor() { }
+  constructor(public stateS: StateService) { }
 
   ngOnInit() {
   }

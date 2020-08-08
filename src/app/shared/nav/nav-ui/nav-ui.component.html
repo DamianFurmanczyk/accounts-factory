@@ -1,4 +1,4 @@
-<nav class="nav">
+<nav [ngClass]="{homepage: homepageStyles}" class="nav">
     <div class="nav_content-wrapper">
         <figure routerLink="/" class="nav_logo">
             <img src="assets/img/JP.png" alt="Accounts Factory logo">
@@ -22,12 +22,10 @@
             </ul>
 
             <div class="nav_currency-dropdown">
-                PLN
+                {{activeCurrency}}
                 <span class="fa fa-chevron-down"></span>
                 <ul>
-                    <li>EUR</li>
-                    <li>USD</li>
-                    <li>GBP</li>
+                    <li *ngFor="let option of currencyOptionsToDisplay" (click)="currencyChange.emit(option)">{{option}}</li>
                 </ul>
             </div>
         </div>

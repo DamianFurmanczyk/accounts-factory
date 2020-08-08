@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { StateService } from './core/services/state.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +7,6 @@ import { StateService } from './core/services/state.service';
 })
 
 export class AppComponent {
-  constructor(private stateS: StateService){
-    this.stateS.siema();
+  constructor(){
   }
 }

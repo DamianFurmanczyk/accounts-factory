@@ -30,6 +30,11 @@
       border-bottom-left-radius: 0;
     }
 
+    &.deactivated {
+      background: lighten(#F4F4F4, 2%) !important;
+      color: lighten($darkGray, 20%) !important;
+    }
+
     border-radius: .4rem;
     background: $lightGray;
     border-width: 0;

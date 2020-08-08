@@ -38,7 +38,7 @@
           30 lvl instant delivery
         </span>
         <br>
-        <b>{{acc.price_usd}} USD</b>
+        <b>{{acc.price_usd * currencyExchangeRate | toFixed}} {{currencyMap[currency]}}</b>
       </p>
 
       <p class="account_lower-text">
@@ -46,11 +46,10 @@
       </p>
 
       <!-- oddzielny komponent z input i output, w reactcie to bylby dummy -->
-      <div class="quantity-btns-wrapper">
-        <button>-</button>
-        {{acc.selQuantity}}
-        <button>+</button>
-      </div>
+      <app-quantity-btns 
+        [account]="acc"
+        (quantityChange)="changeAccountQuantity.emit($event)">
+      </app-quantity-btns>
 
       <div class="account_actions">
         <button *ngIf="acc.count == 0" class="outOfStock">Out of stock</button>

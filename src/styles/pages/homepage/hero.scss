@@ -1,3 +1,4 @@
+
 .hero {
     background: url('assets/img/hero2x.png') 50% 70%;
     background-size: cover;
@@ -32,5 +33,11 @@
 
     button {
         @include btn-blue;
+    }
+}
+
+@media (max-width: 1000px) {
+    .hero {
+        padding: 200px 0 100px 0;
     }
 }

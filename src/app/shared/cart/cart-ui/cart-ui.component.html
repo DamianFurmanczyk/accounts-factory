@@ -1,26 +1,26 @@
-<aside class="cart">
-
+<aside class="cart" [ngClass]="{'active': cartActiveStyles}">
+  <!-- <div class="cart_content-wrapper"> -->
+    <span (click)="cartActiveStyles = !cartActiveStyles" class="cart_toggle"><img src="assets/img/shopping-cart-solid.svg" alt="cart-toggle"></span>
     <div class="cart_top-side">
 
       <h3>Your Cart</h3>
-      czy moze byc usd zamiast dollar
 
       <ul *ngIf="cart.accounts.length > 0" class="cart_order-list">
 
         <li *ngFor="let acc of cart.accounts" class="cart_order-list-item">
           <div class="item-desc">
-           <span class="quantity">{{acc.selQuantity}}x</span>
-           <p> {{acc.name}}
-            <small>{{acc.slug | slice:10}}</small>
-           </p>
+            <span class="quantity">{{acc.selQuantity}}x</span>
+            <p> {{acc.name}}
+              <small>{{acc.slug | slice:20}}</small>
+            </p>
           </div>
 
-          <div class="quantity-btns-wrapper quantity-btns-wrapper--cart">
-            <button>-</button>
-            <button>+</button>
-          </div>
+          <app-quantity-btns [account]="acc" [accountQuantityNoDisplay]="true"
+            (quantityChange)="changeCartAccountQuantity.emit($event)">
+          </app-quantity-btns>
 
-          <span class="price">{{acc.price_usd}}USD</span>
+          <span class="price">{{acc.price_usd *currencyExchangeRate * acc.selQuantity | toFixed}}
+            {{currencyMap[currency]}}</span>
           <span (click)="removeFromCart.emit(acc)" class="fa fa-trash"></span>
         </li>
 
@@ -30,23 +30,18 @@
 
 
 
-    <p *ngIf="cart.accounts.length == 0" class="cart_empty-text">Actually is nothing here <br>
-        <small>But you can change it</small>
-      </p>
+    <p *ngIf="cart.accounts.length == 0" class="cart_empty-text">Actually nothing is here <br>
+      <small>But you can change it</small>
+    </p>
 
     <div class="cart_checkout">
 
-      <p class="cart_checkout-redeem-coupon">
-        Have a promo coupon?
-
-        <span>Redeem your coupon</span>
-      </p>
-
       <div class="cart_checkout-separator"></div>
       <p class="cart_checkout-cost">Total cost
-        <span class="right">$0</span>
+        <span class="right">{{currencyMap[currency]}} {{cartTotalPrice | toFixed}}</span>
       </p>
       <button>Buy now</button>
     </div>
 
-  </aside>
+  <!-- </div> -->
+</aside>

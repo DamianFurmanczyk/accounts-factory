@@ -1,12 +1,51 @@
 .cart {
+    width: 420px;
+    background: #fff;
     height: 100vh;
-    position: relative;
-    z-index: 10;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 105;
+    @include blackish_shadow;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-width: 450px;
-    @include blackish_shadow;
+
+    &_toggle {
+        position: absolute;
+        display: none;
+        top: 50px;
+        left: calc(0%  - 50px);
+        height: 30px;
+        width: 30px;
+        cursor: pointer;
+        
+        img {
+            filter: invert(21%) sepia(9%) saturate(1765%) hue-rotate(189deg) brightness(92%) contrast(83%);
+            position: relative;
+            z-index: 20;
+        }
+
+        &.active {
+            left: 20px;
+            img {
+                filter: invert(21%) sepia(9%) saturate(1765%) hue-rotate(189deg) brightness(44%) contrast(83%);
+            }
+        }
+
+        &:after {
+            width: 100%;
+            height: 100%;
+            padding: 4.5px 6px;
+            border-radius: 6px;
+            background: transparentize($color: #fff, $amount: .4);
+            position: absolute;
+            top: -5.2px;
+            left: -4.5px;
+            content: '';
+        }
+    }
     
     h3 {
         font-size: 1.3rem;
@@ -41,16 +80,6 @@
             font-weight: bolder;
         }
 
-        &-redeem-coupon {
-            margin: 1.8rem 0;
-            font-weight: bolder;
-            font-size: .9rem;
-            span {
-                color: $blue;
-                float: right;
-            }
-        }
-
         button {
             @include btn-blue(100%);
             font-size: 1.1rem;
@@ -60,7 +89,9 @@
     }
 
     .price {
-        margin-right: 1rem;
+        margin: 0 1rem 0 -.5rem;
+        min-width: 55px;
+        text-align: right;
     }
 
     &_order-list {
@@ -115,5 +146,40 @@
     &--cart {
         width: 5rem;
         margin-right: 1rem;
+    }
+}
+
+@media (max-width: 1950px) and (min-width: 501px) {
+    .cart_toggle {
+        display: block;
+    }
+    .cart {
+        transform: translate(420px);
+        transition: .45s;
+
+        &.active {
+            transform: translate(0);
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .cart_toggle {
+        display: block;
+    }
+
+    .cart {
+        transform: translate(420px);
+
+        &.active {
+            transform: translate(0);
+            width: 100%;
+
+            .cart_toggle {
+                display: block;
+                left: calc(20px) !important;
+                z-index: 130;
+            }
+        }
     }
 }

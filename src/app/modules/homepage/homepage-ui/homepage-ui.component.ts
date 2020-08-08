@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
 
 import { region } from './../../../core/models/regions.interface';
 import { account } from 'src/app/core/models/accounts.interface';
+import { CountryToCurrencyAbbrevMap } from './../../../core/utils/dataMaps/countryToCurrencyAbbrevMap';
 
 @Component({
   selector: 'app-homepage-ui',
@@ -12,12 +13,15 @@ import { account } from 'src/app/core/models/accounts.interface';
 export class HomepageUiComponent implements OnInit {
   @Input() regions: region[] | null;
   @Input() accounts: account[] | null;
+  @Input() currency: string | null;
+  @Input() currencyExchangeRate: number | null;
 
   @Output() addToCart: EventEmitter<account> = new EventEmitter();
   @Output() removeFromCart: EventEmitter<account> = new EventEmitter();
-  @Output() changeOrderQuantity: EventEmitter<{account: account, quantity: number}> = new EventEmitter();
-
+  @Output() changeAccountQuantity: EventEmitter<{account: account, quantity: number}> = new EventEmitter();
   @Output() onRegionSelected: EventEmitter<string> = new EventEmitter();
+
+  currencyMap = CountryToCurrencyAbbrevMap;
   
   constructor() { }
 

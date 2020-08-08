@@ -6,12 +6,17 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { QuantityBtnsModule } from './shared/quantity-btns/quantity-btns.module';
+import { PipesModule } from './core/pipes/pipes.module';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule,
+BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    QuantityBtnsModule,
+    PipesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

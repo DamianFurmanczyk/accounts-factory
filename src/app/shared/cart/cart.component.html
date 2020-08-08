@@ -1,5 +1,8 @@
 <app-cart-ui [cart]="stateS.cart$ | async"
+    [currency]="stateS.currency$ | async"
+    [cartTotalPrice]="stateS.cartTotalPrice$ | async"
     (addToCart)="cartS.addToCart($event)"
+    [currencyExchangeRate]="stateS.currencyExchangeRateToDollar$ | async"
     (removeFromCart)="cartS.removeFromCart($event)"
-    (changeOrderQuantity)="cartS.changeOrderQuantity($event)">
+    (changeCartAccountQuantity)="cartS.changeOrderQuantity($event)">
 </app-cart-ui>

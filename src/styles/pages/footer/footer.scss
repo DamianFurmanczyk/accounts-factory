@@ -1,15 +1,103 @@
 .main-footer {
     background: #fff;
-    padding: 3% 0 3% 6%;
     &_content-wrapper {
         @include flex-container;
-        max-width: 1050px;
         align-items: center;
-        margin: 0;
+        padding: 3% 0;
     }
 
     &_faq {
         font-weight: 600;
+        margin: 1.3rem 0 0 -3rem;
+        min-height: 210px;
+
+        li.trigger {
+            height: 16px;
+            transition: .4s;
+            &.active {
+              height: 48px;
+        
+              .expendable-list {
+                height: 30px;
+                pointer-events: all;
+                opacity: 1;
+              }
+            }
+          }
+          .expendable-list {
+            display: inline-block;
+            line-height: 1.4;
+            margin-top: .5rem;
+        
+            &.active {
+              margin-bottom: -1.4rem;
+            }
+          }
+        
+          li {
+            margin-right: 1rem;
+          }
+        
+          li:nth-of-type(1) {
+            dd.active {
+              height: 38px;
+            }
+          }
+        
+          li:nth-of-type(2) {
+            dd.active {
+              height: 30px;
+            }
+          }
+        
+          li:nth-of-type(3) {
+            dd.active {
+              height: 50px;
+            }
+          }
+        
+          li:nth-of-type(4) {
+            dd.active {
+              height: 45px;
+            }
+          }
+        
+          li:nth-of-type(5) {
+            dd.active {
+              height: 30px;
+            }
+          }
+        
+          dd {
+            line-height: 1.1;    
+            font-weight: normal;
+            margin-top: -.3rem;
+            padding-right: 3rem;
+            max-width: 400px;
+            color: #7C7C7C;
+            font-size: .8rem;
+            font-weight: lighter;
+            height: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: .3s;
+            
+            &.active {
+              pointer-events: all;
+              opacity: 1;
+            }
+          }
+        
+        ul {
+            font-size: .75rem;
+            line-height: 2.8;
+            font-weight: bold;
+            letter-spacing: .05rem;
+        }
+
+        dt {
+            cursor: pointer;
+        }
 
         h4 {
             font-size: 1.2rem;

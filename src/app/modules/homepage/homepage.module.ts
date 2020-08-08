@@ -9,12 +9,16 @@ import { FooterModule } from './../../shared/footer/footer.module';
 import { CartModule } from './../../shared/cart/cart.module';
 import { NavModule } from './../../shared/nav/nav.module';
 
+import { QuantityBtnsModule } from '../../shared/quantity-btns/quantity-btns.module';
+import { PipesModule } from './../../core/pipes/pipes.module';
 @NgModule({
   declarations: [HomepageComponent, HomepageUiComponent],
   imports: [
     CommonModule,
     HomepageRoutingModule,
     FooterModule,
+    QuantityBtnsModule,
+    PipesModule,
     CartModule,
     NavModule
   ]
