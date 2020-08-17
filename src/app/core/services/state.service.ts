@@ -5,7 +5,7 @@ import { DbService } from './db.service';
 import * as clone from 'clone-deep';
 import { BehaviorSubject } from 'rxjs';
 
-import { first } from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
 
 import { region } from './../models/regions.interface';
 import { currencyOrCountry } from '../models/usersCurrencyCountryResponse.interface';
@@ -23,6 +23,7 @@ export class StateService {
     currency: null,
     region: 'EUNE',
     accounts: null,
+    allRegionsAccounts: null,
     currencyExchangeRateToDollar: null,
     cart: {
       accounts: [],
@@ -32,8 +33,11 @@ export class StateService {
     }
   }
 
+  resolversRun = false;
+
   regions$: BehaviorSubject<null | region[]> = new BehaviorSubject(this.state.regions);
   accounts$: BehaviorSubject<account[] | null> = new BehaviorSubject(this.state.accounts);
+  allRegionsAccounts$: BehaviorSubject<account[] | null> = new BehaviorSubject(this.state.allRegionsAccounts);
   currency$: BehaviorSubject<currencyOrCountry | string> = new BehaviorSubject(this.state.currency);
   usersCountry$: BehaviorSubject<currencyOrCountry | string> = new BehaviorSubject(this.state.usersCountry);
   cart$: BehaviorSubject<cartState> = new BehaviorSubject(this.state.cart);
@@ -42,26 +46,41 @@ export class StateService {
 
   constructor(private dbS: DbService) {
     console.log(clone({ asd: '123' }))
-    this.loadDbRegionsToState();
-    this.loadDbCurrencyAndUsersCountryToState();
-    this.loadDbAccountsToState();
+    this.laodAllRegionsAccounts();
+    // this.loadDbRegionsToState();
+    // this.loadDbCurrencyAndUsersCountryToState();
+    // this.loadDbAccountsToState();
+  }
+
+  laodAllRegionsAccounts() {
+    return this.dbS.getAllRegionsAccounts().pipe(
+      first(),
+      tap((res) => {
+        console.log(res);
+        this.allRegionsAccounts$.next(<account[]>res);
+  
+        this.state = {...this.state, allRegionsAccounts: res};
+        console.log(this.state)
+      })
+    ).subscribe();
   }
 
   loadDbCurrencyAndUsersCountryToState() {
-    this.dbS.getCurrencyAndUsersCountry().pipe(
-      first()
-    ).subscribe(res => {
-      console.log(res);
-      const currency = res[0][0],
-      usersCountry = res[1][0];
-      this.currency$.next(currency);
-      this.usersCountry$.next(usersCountry);
-
-      this.loadCurrencyExchangeRateToDollar(currency);
-
-      this.state = {...this.state, currency, usersCountry};
-      console.log(this.state)
-    });
+    return this.dbS.getCurrencyAndUsersCountry().pipe(
+      first(),
+      tap(res => {
+        console.log(res);
+        const currency = res[0][0],
+        usersCountry = res[1][0];
+        this.currency$.next(currency);
+        this.usersCountry$.next(usersCountry);
+  
+        this.loadCurrencyExchangeRateToDollar(currency);
+  
+        this.state = {...this.state, currency, usersCountry};
+        console.log(this.state)
+      })
+    );
   }
 
   loadCurrencyExchangeRateToDollar(currencyName: string) {
@@ -102,31 +121,33 @@ export class StateService {
   }
 
   loadDbRegionsToState() {
-    this.dbS.getRegions().pipe(
-      first()
-    ).subscribe(res => {
-      this.state = {...this.state, regions: res};
-      this.regions$.next(res);
-    });
+    return this.dbS.getRegions().pipe(
+      first(),
+      tap(res => {
+        this.state = {...this.state, regions: res};
+        this.regions$.next(res);
+      })
+    );
   }
 
   updateAccountsBasedOnRegion(regionSelected: string) {
     this.state.region = regionSelected;
-    this.loadDbAccountsToState();
+    this.loadDbAccountsToState().subscribe();
   }
 
   loadDbAccountsToState() {
-    this.dbS.getAccounts(this.state.region).pipe(
-      first()
-    ).subscribe(res => {
-      let currIndex = 0;
-      const resFormatted = res.acc.map(acc => {
-        const count = res.count[currIndex++]
-        return {...acc, count, selQuantity: count > 0? 1 : 0}
+    return this.dbS.getAccounts(this.state.region).pipe(
+      first(),
+      tap(res => {
+        let currIndex = 0;
+        const resFormatted = res.acc.map(acc => {
+          const count = res.count[currIndex++]
+          return {...acc, count, selQuantity: count > 0? 1 : 0}
+        })
+        this.state = {...this.state, accounts: resFormatted};
+        this.accounts$.next(resFormatted);
       })
-      this.state = {...this.state, accounts: resFormatted};
-      this.accounts$.next(resFormatted);
-    });
+    );
   }
 
 }

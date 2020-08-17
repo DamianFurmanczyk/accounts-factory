@@ -2,13 +2,18 @@
     background: #fff;
     &_content-wrapper {
         @include flex-container;
+        max-width: 900px;
         align-items: center;
-        padding: 3% 0;
+        padding: 4rem 0 3rem 0;
+
+        * {
+          flex-basis: auto;
+        }
     }
 
     &_faq {
         font-weight: 600;
-        margin: 1.3rem 0 0 -3rem;
+        margin: 1.3rem 0 0 2rem;
         min-height: 210px;
 
         li.trigger {
@@ -37,6 +42,8 @@
           li {
             margin-right: 1rem;
           }
+
+          dd { padding: 0; }
         
           li:nth-of-type(1) {
             dd.active {
@@ -111,7 +118,7 @@
     }
 
     &_links-list {
-        margin-top: -.5rem;
+        margin: -.5rem 0 -2rem 0;
         letter-spacing: .5px;
         font-weight: 600;
         line-height: 3;
@@ -136,4 +143,31 @@
             line-height: 1.6;
         }
     }
+}
+
+@media (max-width: $m2) {
+  .main-footer {
+    &_faq {
+      display: none;
+    }
+
+    figure {
+      text-align: center;
+
+      img {
+        margin: 0 auto .8rem auto;
+      }
+    }
+
+    &_links-list {
+      margin: 1.5rem 0;
+      text-align: center;
+    }
+
+    &_content-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
 }

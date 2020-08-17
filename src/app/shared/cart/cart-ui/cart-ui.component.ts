@@ -15,6 +15,7 @@ export class CartUiComponent implements OnInit {
   @Input() cartTotalPrice: number;
   @Input() currencyExchangeRate: number;
   @Input() currency: string;
+  @Input() mediumHideBreakdownFlag: boolean;
 
   @Output() addToCart: EventEmitter<account> = new EventEmitter();
   @Output() removeFromCart: EventEmitter<account> = new EventEmitter();

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { region } from './../models/regions.interface';
 import { currencyOrCountry } from '../models/usersCurrencyCountryResponse.interface';
 import { accountsDataResponse } from '../models/accounts.interface';
+import { account } from 'src/app/core/models/accounts.interface';
 
 @Injectable({
 	providedIn: 'root'
@@ -29,10 +30,12 @@ export class DbService {
 		return this.http.get(this.apiUrl + 'coupon')
 	}
 
-	// unikaj circular dep, rob parametry zamiast injectowac i odbierac ze state'a rzeczy subskrypcja
-
 	getAccounts(regionName: string) {
-	  return this.http.get<accountsDataResponse>(this.apiUrl + 'accounts/regionname/' + regionName);
+		return this.http.get<accountsDataResponse>(this.apiUrl + 'accounts/regionname/' + regionName);
+	  }
+
+	  getAllRegionsAccounts() {
+		return this.http.get<account[]>(this.apiUrl + 'accounts');
 	}
 
 	getRegions() {

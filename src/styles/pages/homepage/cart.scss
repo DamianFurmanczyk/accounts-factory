@@ -133,7 +133,7 @@
                 display: flex;
                 flex: 1;
                 max-width: 50%;
-                margin-bottom: -1.6rem;
+                margin-bottom: -.7rem;
             }
         }
     }
@@ -149,11 +149,28 @@
     }
 }
 
-@media (max-width: 1950px) and (min-width: 501px) {
-    .cart_toggle {
-        display: block;
+@media (max-width: $l1) and (min-width: 501px) {
+
+    .cart:not(.mediumBreakdown) {    
+        .cart_toggle {
+            display: block;
+        }
+
+        transform: translate(420px);
+        transition: .45s;
+
+        &.active {
+            transform: translate(0);
+        }
     }
+}
+
+@media (max-width: $m1) {
     .cart {
+        .cart_toggle {
+            display: block;
+        }
+
         transform: translate(420px);
         transition: .45s;
 

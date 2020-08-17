@@ -1,5 +1,4 @@
 .payment {
-
     figure:last-of-type {
         .payment-method {
             margin: 0;
@@ -13,6 +12,7 @@
 
     &-method {
         margin-right: 20px;
+        position: relative;
 
         &.active {
             .payment-method_img-wrapper {
@@ -26,6 +26,9 @@
             margin-top: .8rem;
             font-size: .85rem;
             font-weight: bold;
+            position: absolute;
+            top: 100%;
+            width: 100%;
         }
     }
 
@@ -47,4 +50,32 @@
     }
 
 
+}
+
+@media (max-width: $s1) {
+    .payment_methods-wrapper {
+        flex-wrap: wrap;
+        .payment-method {
+            width: 50%;
+            display: flex;
+            margin-right: 0;
+            flex-direction: column;
+            margin-bottom: 1rem;
+
+            &:nth-of-type(2n) {
+                align-items: flex-start;
+            }
+
+            &:nth-of-type(-n + 2) {
+                align-items: flex-start;
+                margin-bottom: 3rem;
+            }
+
+            &:nth-of-type(2n + 1) {
+                align-items: flex-end;
+                margin-right: 1rem;
+                width: calc(50% - 1rem);
+            }
+        }
+    }
 }

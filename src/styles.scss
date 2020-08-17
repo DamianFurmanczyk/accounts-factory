@@ -2,13 +2,12 @@
 @import 'styles/colors';
 @import 'styles/typography';
 @import 'styles/mixins/';
-@import 'styles/normalize.scss';
+@import 'styles/normalize';
+@import 'styles/breakpoints';
 
 body {
-    font-family: 'Poppins';
+    font-family: 'Poppins' !important;
     color: $black;
-    margin-right: 420px;
-    width: calc(100% - 420px);
 }
 
 .grayish-bg {
@@ -16,8 +15,21 @@ body {
     padding-bottom: 1rem;
 }
 
-@media (max-width: 1950px) {
-    body {
+.main-content {
+    width: calc(100% - 420px);
+    position: relative;
+    margin-right: 420px;
+}
+
+@media (max-width: $l1) {
+    .main-content:not(.main-content--medium-breakpoint) {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: $m1) {
+    .main-content {
         width: 100%;
         margin-right: 0;
     }
@@ -25,3 +37,5 @@ body {
 
 @import 'styles/pages/';
 @import 'styles/shared/';
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

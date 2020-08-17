@@ -29,6 +29,7 @@
         letter-spacing: 2px;
         margin-bottom: 3rem;
         font-weight: bolder;
+        line-height: 1.2;
     }
 
     button {
@@ -39,5 +40,23 @@
 @media (max-width: 1000px) {
     .hero {
         padding: 200px 0 100px 0;
+    }
+}
+
+@media (max-width: 950px) {
+    .hero {
+        h1 {
+            font-size: 2.1rem;
+            line-height: 1.4;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        h1 {
+            font-size: 1.9rem;
+            line-height: 1.7;
+        }
     }
 }

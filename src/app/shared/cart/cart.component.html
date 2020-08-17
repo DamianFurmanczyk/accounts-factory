@@ -1,4 +1,5 @@
 <app-cart-ui [cart]="stateS.cart$ | async"
+    [mediumHideBreakdownFlag] ="mediumHideBreakdownFlag"
     [currency]="stateS.currency$ | async"
     [cartTotalPrice]="stateS.cartTotalPrice$ | async"
     (addToCart)="cartS.addToCart($event)"

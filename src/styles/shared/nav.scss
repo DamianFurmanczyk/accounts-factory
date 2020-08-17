@@ -58,6 +58,7 @@
     }
 
     &_currency-dropdown {
+        width: 62px;
         cursor: pointer;
         padding: 12px 18px;
         background: #fff;
@@ -142,10 +143,102 @@
         height: 100%;
         justify-content: space-between;
     }
+
+    .hamburger {
+        display: none;
+    }
 }
 
-@media (min-width: 1951px) {
+@media (max-width: $l1) {
     .nav {
-        width: calc(100% - 420px);
+        width: 100%;
+    }
+}
+
+@media (max-width: $m3) {
+
+    .nav {
+        padding-top: 7rem;
+        background: #fff;
+        box-shadow: 0 13px 20px -15px transparentize($color: $blackish, $amount: .3);
+
+        &_link {
+            margin-bottom: .7rem;
+            &:hover, &.active  {
+                color: $blackish !important;
+            }
+        }
+        
+        &_currency-dropdown:hover {
+            box-shadow: 0 3px 30px -15px transparentize($color: $blackish, $amount: .1);
+            li:hover {
+                color: $gray3 !important;
+            }
+        }
+
+        &_link--dropdown li:hover {
+            color: $gray3 !important;
+        }
+
+        &_currency-dropdown {
+            transform: translate(1.4rem, -.5rem);
+        }
+
+        &_link--dropdown {
+            z-index: 150;
+            transform: translate(3rem, -.8rem);
+        }
+
+        .hamburger {
+            display: block;
+            position: absolute;
+            right: 15%;
+            top: 3rem;
+        }
+
+        img {
+            display: none;
+        }
+
+        &_links-list {
+            flex-direction: column;
+            align-items: center;
+            width: 100vw;
+            background: #fff;
+        }
+
+        &_ulNdropdown {
+            flex-direction: column;
+            align-items: center;
+            width: 100vw;
+            background: #fff;
+            padding-bottom: 4.5rem;
+            box-shadow: 0 13px 20px -15px transparentize($color: $blackish, $amount: .3);
+        }
+
+        &.active {
+            box-shadow: none;
+            .nav_content-wrapper {
+            display: block;
+            }
+        }
+
+        &_content-wrapper {
+            display: none;
+            position: absolute;
+            flex-direction: column;
+            align-items: center;
+            width: 100vw;
+            top: 100%;
+            background: #fff;
+        }
+    }
+}
+
+@media (max-width: 440px) {
+    .nav {
+        .hamburger {
+            right: 22%;
+        }
     }
 }

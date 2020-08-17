@@ -1,13 +1,12 @@
 <section class="checkout">
-    <form class="identity-form">
-
+    <form [formGroup]="presenter.checkoutForm" class="identity-form">
         <h3 class="checkout_heading">Identity</h3>
 
         <label for="name">Full Name</label>
-        <input id="name" type="text">
+        <input formControlName="fullname" id="name" type="text">
 
         <label for="email">Email</label>
-        <input id="email" type="email">
+        <input formControlName="email" id="email" type="email">
 
         <label for="country">Country</label>
         <select id="country">
@@ -20,7 +19,7 @@
         </select>
         <small> *NOT NEEDED</small>
     </form>
-
+    <country-picker [flag]="false" [setValue]="'cca3'" [setName]="'name.common'" [classes]="['form-control']"></country-picker>
     <section class="payment">
         <h3 class="checkout_heading checkout_heading--last">Select payment method</h3>
 
@@ -30,34 +29,34 @@
                 <div class="payment-method_img-wrapper">
                     <img src="assets/img/visa.svg" alt="Credit card">
                     <img src="assets/img/mastercard.svg" alt="Credit card">
+                    <figcaption>
+                        Credit card
+                    </figcaption>
                 </div>
-                <figcaption>
-                    Credit card
-                </figcaption>
             </figure>
             <figure class="payment-method">
                 <div class="payment-method_img-wrapper">
                     <img src="assets/img/payment-bank-transfer.svg" alt="Bank transfer">
+                    <figcaption>
+                        Bank transfer
+                    </figcaption>
                 </div>
-                <figcaption>
-                    Bank transfer
-                </figcaption>
             </figure>
             <figure class="payment-method">
                 <div class="payment-method_img-wrapper">
                     <img src="assets/img/paypal.svg" alt="Paypal">
+                    <figcaption>
+                        Paypal
+                    </figcaption>
                 </div>
-                <figcaption>
-                    Paypal
-                </figcaption>
             </figure>
             <figure class="payment-method">
                 <div class="payment-method_img-wrapper">
                     <img src="assets/img/visa.svg" alt="Cryptocurrency">
+                    <figcaption>
+                        Cryptocurrency
+                    </figcaption>
                 </div>
-                <figcaption>
-                    Cryptocurrency
-                </figcaption>
             </figure>
 
         </div>

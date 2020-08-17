@@ -1,5 +1,6 @@
 .accounts {
-    margin: 6% 0;
+    margin: 4.5% 0;
+    padding: 2.5rem 0;
 
     &_wrapper {
         @include flex-container;
@@ -70,6 +71,28 @@
                 background: $gray2;
                 color: $darkGray2;
             }
+        }
+    }
+}
+
+@media (max-width: 1430px) {
+    .accounts {
+        width: 98%;
+        margin: 6% auto;
+        
+        &_wrapper {
+            justify-content: start;
+            padding-bottom: 1rem;
+        }
+    }
+
+    .account {
+        &:first-of-type {
+            margin-left: -12%;
+        }
+
+        &:last-of-type {
+            margin-right: 4rem;
         }
     }
 }

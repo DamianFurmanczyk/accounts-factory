@@ -1,18 +1,20 @@
-<main class="grayish-bg">
-    <app-nav [homepageStyles]="true"></app-nav>
+<main class="main-content">    
+    <section class="grayish-bg">
+        <app-nav [homepageStyles]="true"></app-nav>
 
-    <app-homepage-ui 
-        [regions]="stateS.regions$ | async"
-        [accounts]="stateS.accounts$ | async"
-        [currency]="stateS.currency$ | async"
-        [currencyExchangeRate]="stateS.currencyExchangeRateToDollar$ | async"
-        (onRegionSelected)="stateS.updateAccountsBasedOnRegion($event)"
-        (addToCart)="cartS.addToCart($event)"
-        (removeFromCart)="cartS.removeFromCart($event)"
-        (changeAccountQuantity)="stateS.changeAccountSelectedQuantity($event)">
-    </app-homepage-ui>
+        <app-homepage-ui 
+            [regions]="stateS.regions$ | async"
+            [accounts]="stateS.accounts$ | async"
+            [currency]="stateS.currency$ | async"
+            [currencyExchangeRate]="stateS.currencyExchangeRateToDollar$ | async"
+            (onRegionSelected)="stateS.updateAccountsBasedOnRegion($event)"
+            (addToCart)="cartS.addToCart($event)"
+            (removeFromCart)="cartS.removeFromCart($event)"
+            (changeAccountQuantity)="stateS.changeAccountSelectedQuantity($event)">
+        </app-homepage-ui>
+    </section>
+
+    <app-footer></app-footer>
 </main>
-
-<app-footer></app-footer>
 
 <app-cart></app-cart>

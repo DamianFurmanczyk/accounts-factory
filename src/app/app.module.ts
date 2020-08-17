@@ -7,18 +7,29 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { QuantityBtnsModule } from './shared/quantity-btns/quantity-btns.module';
+
 import { PipesModule } from './core/pipes/pipes.module';
+
+import { HomepageResolver } from './core/resolvers/homepage.resolver';
+import { CheckoutResolver } from './core/resolvers/checkout.resolver';
+import { BulkResolver } from './core/resolvers/bulk.resolver';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-BrowserModule,
+    BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     QuantityBtnsModule,
-    PipesModule
+    PipesModule,
+    NoopAnimationsModule
   ],
-  providers: [],
+  providers: [
+    HomepageResolver,
+    CheckoutResolver,
+    BulkResolver
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

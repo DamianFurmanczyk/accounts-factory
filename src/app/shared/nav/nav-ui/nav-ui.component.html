@@ -1,4 +1,4 @@
-<nav [ngClass]="{homepage: homepageStyles}" class="nav">
+<nav [ngClass]="{'homepage': homepageStyles, 'active': navActiveFlag}" class="nav">
     <div class="nav_content-wrapper">
         <figure routerLink="/" class="nav_logo">
             <img src="assets/img/JP.png" alt="Accounts Factory logo">
@@ -28,7 +28,11 @@
                     <li *ngFor="let option of currencyOptionsToDisplay" (click)="currencyChange.emit(option)">{{option}}</li>
                 </ul>
             </div>
-        </div>
 
+
+        </div>
     </div>
+    <span #hamburger class="hamburger" [ngClass]="{'hamburger--open': navActiveFlag}" (click)="navActiveFlag = !navActiveFlag" href="#">
+        <div class="hamburger__inner"></div>
+      </span>  
 </nav>

@@ -11,6 +11,8 @@ export class NavUiComponent implements OnInit {
   @Input() currency;
   @Input() homepageStyles;
 
+  navActiveFlag = false;
+
   @Input() set currencySetHandler(excludeCurr) {
     console.log('to rem after resolvers or smth')
     console.log(excludeCurr)

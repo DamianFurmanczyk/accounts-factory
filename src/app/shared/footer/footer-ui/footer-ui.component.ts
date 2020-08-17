@@ -11,6 +11,7 @@ export class FooterUiComponent {
   @ViewChild('faqColumn', {static: true}) faqCol: ElementRef;
   @ViewChild('linksCol', {static: true}) linksCol: ElementRef;
   dds: NodeListOf<HTMLElement>;
+  explendableUlsTriggers: NodeListOf<HTMLElement>;
 
   constructor() { }
 

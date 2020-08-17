@@ -1,4 +1,4 @@
-<aside class="cart" [ngClass]="{'active': cartActiveStyles}">
+<aside class="cart" [ngClass]="{'active': cartActiveStyles, 'mediumBreakdown': mediumHideBreakdownFlag}">
   <!-- <div class="cart_content-wrapper"> -->
     <span (click)="cartActiveStyles = !cartActiveStyles" class="cart_toggle"><img src="assets/img/shopping-cart-solid.svg" alt="cart-toggle"></span>
     <div class="cart_top-side">
