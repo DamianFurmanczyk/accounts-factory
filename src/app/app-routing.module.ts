@@ -14,18 +14,18 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        resolve: {HomepageResolver},
-        loadChildren: () => import('./modules/homepage/homepage.module').then(m => m.HomepageModule)
+        loadChildren: () => import('./modules/homepage/homepage.module').then(m => m.HomepageModule),
+        resolve: {HomepageResolver}
       },
       {
         path: 'bulk',
-        resolve: {BulkResolver},
-        loadChildren: () => import('./modules/bulk/bulk.module').then(m => m.BulkModule)
+        loadChildren: () => import('./modules/bulk/bulk.module').then(m => m.BulkModule),
+        resolve: {BulkResolver}
       },
       {
         path: 'checkout',
-        resolve: {CheckoutResolver},
-        loadChildren: () => import('./modules/checkout/checkout.module').then(m => m.CheckoutModule)
+        loadChildren: () => import('./modules/checkout/checkout.module').then(m => m.CheckoutModule),
+        resolve: {CheckoutResolver}
       },
       {
         path: '**', redirectTo: ''
@@ -35,7 +35,7 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+exports: [RouterModule]
 })
 export class AppRoutingModule { }
 

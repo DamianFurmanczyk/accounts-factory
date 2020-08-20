@@ -4,6 +4,7 @@ import { region } from './../models/regions.interface';
 import { currencyOrCountry } from '../models/usersCurrencyCountryResponse.interface';
 import { accountsDataResponse } from '../models/accounts.interface';
 import { account } from 'src/app/core/models/accounts.interface';
+import { map } from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
@@ -22,12 +23,31 @@ export class DbService {
 		return this.http.get(this.apiUrl + `verify/${id}`);
 	}
 
+	getCountries() {
+		return this.http.get('https://restcountries.eu/rest/v2/all').pipe(
+			map((res: any[]) => {
+
+				let countriesObj = {};
+
+				res.forEach(el => {
+					countriesObj[el.alpha2Code] = el.name;
+				});
+
+				return countriesObj;
+			})
+		);
+	}
+
 	getExchangeRateToDollar(currency: string) {
 		return this.http.get(this.apiUrl + `convert/1/USD/${currency}`);
 	}
 
 	getCoupons() {
 		return this.http.get(this.apiUrl + 'coupon')
+	}
+
+	getVatRate(countryCode: string) {
+		return this.http.get('http://api.vatlookup.eu/rates/' + countryCode);
 	}
 
 	getAccounts(regionName: string) {

@@ -1,0 +1,6 @@
+<div class="custom-select">
+    <select>
+        <option [value]="usersCountry"> {{usersCountry}} </option>
+        <option *ngFor="let country of countries" [value]="country['key']">{{country['name']}}</option>
+    </select>
+</div>

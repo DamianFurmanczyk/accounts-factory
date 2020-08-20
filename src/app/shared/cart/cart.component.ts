@@ -8,6 +8,7 @@ import { StateService } from './../../core/services/state.service';
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
+  @Input() contentType: string;
   @Input() mediumHideBreakdownFlag = false;
 
   constructor(public cartS: CartStateService, public stateS: StateService) { }

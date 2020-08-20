@@ -13,7 +13,6 @@ import { PipesModule } from './core/pipes/pipes.module';
 import { HomepageResolver } from './core/resolvers/homepage.resolver';
 import { CheckoutResolver } from './core/resolvers/checkout.resolver';
 import { BulkResolver } from './core/resolvers/bulk.resolver';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,8 +21,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     HttpClientModule,
     QuantityBtnsModule,
-    PipesModule,
-    NoopAnimationsModule
+    PipesModule
   ],
   providers: [
     HomepageResolver,

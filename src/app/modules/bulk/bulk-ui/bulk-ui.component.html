@@ -1,20 +1,76 @@
 <section class="bulk">
     <div class="regions-stats-wrapper">
-        <div *ngFor="let item of [1,1,1,1,1,1,1,1,1,1]" class="region-stats">
+        <div *ngFor="let accountsData of accountsGrouped" class="region-stats">
 
             <figure>
-                <img src="assets/img/RU.png">
+                <img [src]="'assets/img/' + regionIdToNameMap[accountsData.region_id] + '.png'">
                 <figcaption>
-                    RU
+                    {{regionIdToNameMap[accountsData.region_id]}}
                 </figcaption>
             </figure>
 
-            <div *ngFor="let item of [1,1,1,1]" class="region-stats_stat">
+            <div class="region-stats_stat">
                 <span class="region-stats_stat-essence">
                     40k
                 </span>
                 <div class="region-stats_stat-box">
-                    0
+                    {{accountsData.accounts.Basic}}
+                </div>
+                <ul class="region-stats_stat-list">
+                    <li>$1.5</li>
+                    <li>$1.4</li>
+                    <li>$1</li>
+                </ul>
+            </div>
+
+            <div class="region-stats_stat">
+                <span class="region-stats_stat-essence">
+                    50k
+                </span>
+                <div class="region-stats_stat-box">
+                    {{accountsData.accounts.Standard}}
+                </div>
+                <ul class="region-stats_stat-list">
+                    <li>$1.5</li>
+                    <li>$1.4</li>
+                    <li>$1</li>
+                </ul>
+            </div>
+
+            <div class="region-stats_stat">
+                <span class="region-stats_stat-essence">
+                    60k
+                </span>
+                <div class="region-stats_stat-box">
+                    {{accountsData.accounts.Premium}}
+                </div>
+                <ul class="region-stats_stat-list">
+                    <li>$1.5</li>
+                    <li>$1.4</li>
+                    <li>$1</li>
+                </ul>
+            </div>
+
+            <div class="region-stats_stat">
+                <span class="region-stats_stat-essence">
+                    70k
+                </span>
+                <div class="region-stats_stat-box">
+                    {{accountsData.accounts.Epic}}
+                </div>
+                <ul class="region-stats_stat-list">
+                    <li>$1.5</li>
+                    <li>$1.4</li>
+                    <li>$1</li>
+                </ul>
+            </div>
+
+            <div class="region-stats_stat">
+                <span class="region-stats_stat-essence">
+                    100k
+                </span>
+                <div class="region-stats_stat-box">
+                    {{accountsData.accounts.Legendary}}
                 </div>
                 <ul class="region-stats_stat-list">
                     <li>$1.5</li>

@@ -1,11 +1,14 @@
-<main class="main-content">
+<main class="main-content main-content--bulk">
     <section class="grayish-bg">
         <app-nav></app-nav>
     
-        <app-bulk-ui></app-bulk-ui>
+        <app-bulk-ui 
+        [accounts]="stateS.allRegionsAccounts$ | async"
+        [regionIdToNameMap]="stateS.regionIdToRegionNameMap"
+        ></app-bulk-ui>
     </section>
     
     <app-footer></app-footer>
 </main>
 
-<app-cart></app-cart>
+<app-cart [contentType]="'bulk'"></app-cart>

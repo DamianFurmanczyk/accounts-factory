@@ -12,7 +12,6 @@ body {
 
 .grayish-bg {
     background: #F7F7F7;
-    padding-bottom: 1rem;
 }
 
 .main-content {
@@ -31,6 +30,13 @@ body {
 @media (max-width: $m1) {
     .main-content {
         width: 100%;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 1600px) and (min-width: 1363px) {
+    .main-content.main-content--bulk {
+        width: calc(100% - 420px);
         margin-right: 0;
     }
 }

@@ -1,6 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { CheckoutPresenter } from './checkout-ui.pesenter';
-import { ICountry } from './country.interface';
 
 @Component({
   selector: 'app-checkout-ui',
@@ -10,9 +9,24 @@ import { ICountry } from './country.interface';
   providers: [CheckoutPresenter]
 })
 export class CheckoutUiComponent implements OnInit {
-  public countries: ICountry[] = [];
+  @Input() cartTotalPrice: number;
+  @Input() currency: string;
+  @Input() set countries(countries: {} | null) {
+    console.log(countries)
+    this.countriesObj = countries;
+    if(!countries) return;
+    this.countriesArr = Object.keys(countries).map(key => {
+      return {name: countries[key], key}
+    });
+    console.log(countries)
+    console.log(this.countriesArr)
+  };
+  @Input() usersCountry: string;
+  countriesObj = {};
 
-  constructor(public presenter: CheckoutPresenter) { }
+  countriesArr: {}[] = [];
+
+  constructor(public presenter: CheckoutPresenter) { } 
 
   ngOnInit() {
   }

@@ -1,5 +1,12 @@
 <main class="main-content main-content--medium-breakpoint">
-    <app-checkout-ui></app-checkout-ui>
+    <section class="grayish-bg">
+        <app-checkout-ui 
+        [countries]="stateS.countries$ | async"
+        [usersCountry]="stateS.usersCountry$ | async"
+        [cartTotalPrice]="stateS.cartTotalPrice$ | async" 
+        [currency]="stateS.currency$ | async">
+    </app-checkout-ui>
+    </section>
 </main>
 
-<app-cart [mediumHideBreakdownFlag]="true"></app-cart>
+<app-cart [mediumHideBreakdownFlag]="true" [contentType]="'checkout'"></app-cart>

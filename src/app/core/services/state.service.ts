@@ -21,8 +21,10 @@ export class StateService {
     regions: null,
     usersCountry: null,
     currency: null,
+    countries: null,
     region: 'EUNE',
     accounts: null,
+    vatRate: null,
     allRegionsAccounts: null,
     currencyExchangeRateToDollar: null,
     cart: {
@@ -35,7 +37,11 @@ export class StateService {
 
   resolversRun = false;
 
+  regionIdToRegionNameMap = {};
+
   regions$: BehaviorSubject<null | region[]> = new BehaviorSubject(this.state.regions);
+  vatRate$: BehaviorSubject<null | number> = new BehaviorSubject(this.state.vatRate);
+  countries$: BehaviorSubject<null | any[]> = new BehaviorSubject(this.state.countries);
   accounts$: BehaviorSubject<account[] | null> = new BehaviorSubject(this.state.accounts);
   allRegionsAccounts$: BehaviorSubject<account[] | null> = new BehaviorSubject(this.state.allRegionsAccounts);
   currency$: BehaviorSubject<currencyOrCountry | string> = new BehaviorSubject(this.state.currency);
@@ -45,11 +51,23 @@ export class StateService {
   currencyExchangeRateToDollar$: BehaviorSubject<number | null> = new BehaviorSubject(this.state.cart.orderPrice);
 
   constructor(private dbS: DbService) {
-    console.log(clone({ asd: '123' }))
-    this.laodAllRegionsAccounts();
+    // console.log(clone({ asd: '123' }));
     // this.loadDbRegionsToState();
     // this.loadDbCurrencyAndUsersCountryToState();
     // this.loadDbAccountsToState();
+  }
+
+  loadVatRate(countryCode: string) {
+    return this.dbS.getVatRate(countryCode).pipe(
+      first(),
+      tap((res) => {
+        // console.log(res)
+
+        this.vatRate$.next(<number>res);
+
+        this.state = {...this.state, vatRate: res};
+      })
+    );
   }
 
   laodAllRegionsAccounts() {
@@ -62,23 +80,38 @@ export class StateService {
         this.state = {...this.state, allRegionsAccounts: res};
         console.log(this.state)
       })
-    ).subscribe();
+    );
+  }
+
+  laodCountries() {
+    return this.dbS.getCountries().pipe(
+      first(),
+      tap((res: any) => {
+        // // console.log(res);
+        this.countries$.next(res);
+  
+        this.state = {...this.state, countries: res};
+      })
+    );
   }
 
   loadDbCurrencyAndUsersCountryToState() {
     return this.dbS.getCurrencyAndUsersCountry().pipe(
       first(),
       tap(res => {
-        console.log(res);
+        // // console.log(res);
         const currency = res[0][0],
-        usersCountry = res[1][0];
+        usersCountry = res[2][0];
         this.currency$.next(currency);
         this.usersCountry$.next(usersCountry);
+
+        // console.log(res);
   
         this.loadCurrencyExchangeRateToDollar(currency);
   
         this.state = {...this.state, currency, usersCountry};
-        console.log(this.state)
+        // console.log(this.state)
+        this.loadVatRate(usersCountry).subscribe();
       })
     );
   }
@@ -87,12 +120,12 @@ export class StateService {
     this.dbS.getExchangeRateToDollar(currencyName).pipe(
       first()
     ).subscribe(res => {
-      console.log(res)
+      // console.log(res)
 
       this.state = {...this.state, currencyExchangeRateToDollar: res,  currency: currencyName};
       this.currencyExchangeRateToDollar$.next(<number>res);
       this.currency$.next(currencyName);
-      console.log(this.state)
+      // console.log(this.state)
     });
   }
 
@@ -123,7 +156,11 @@ export class StateService {
   loadDbRegionsToState() {
     return this.dbS.getRegions().pipe(
       first(),
-      tap(res => {
+      tap((res: region[]) => {
+        res.forEach(
+          el => this.regionIdToRegionNameMap[el.id] = el.name
+        );
+
         this.state = {...this.state, regions: res};
         this.regions$.next(res);
       })

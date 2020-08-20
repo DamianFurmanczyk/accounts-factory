@@ -8,10 +8,11 @@
         <label for="email">Email</label>
         <input formControlName="email" id="email" type="email">
 
-        <label for="country">Country</label>
-        <select id="country">
-            <option selected>siema</option>
-        </select>
+        <label for="idkman">Country</label>
+        <app-country-select 
+            [countries]="countriesArr"
+            [usersCountry]="countriesObj[usersCountry]">
+        </app-country-select>
 
         <label for="vat">VAT</label>
         <select id="vat">
@@ -19,7 +20,16 @@
         </select>
         <small> *NOT NEEDED</small>
     </form>
-    <country-picker [flag]="false" [setValue]="'cca3'" [setName]="'name.common'" [classes]="['form-control']"></country-picker>
+
+    <section class="order-summary">
+        <h4>Total cost <span>{{currency}} {{cartTotalPrice}}</span></h4>
+        <ul class="order-summary_list">
+            <li>Subtotal <span>$120.49</span></li>
+            <li>Fee <span>$120.49</span></li>
+            <li>Taxes <span>$12.49</span></li>
+        </ul>
+    </section>
+
     <section class="payment">
         <h3 class="checkout_heading checkout_heading--last">Select payment method</h3>
 
@@ -60,6 +70,10 @@
             </figure>
 
         </div>
+
+        <!-- <div class="summary">
+            <h4>Total cost {{cartTotalPrice}} {{currency}}</h4>
+        </div> -->
 
     </section>
 

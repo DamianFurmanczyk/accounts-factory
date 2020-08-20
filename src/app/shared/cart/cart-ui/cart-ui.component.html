@@ -1,9 +1,15 @@
-<aside class="cart" [ngClass]="{'active': cartActiveStyles, 'mediumBreakdown': mediumHideBreakdownFlag}">
-  <!-- <div class="cart_content-wrapper"> -->
+<aside class="cart" [ngClass]="{'active': cartActiveStyles, 
+    'mediumBreakdown': mediumHideBreakdownFlag, '--bulk': contentType == 'bulk', '--checkout': contentType == 'checkout'}">
     <span (click)="cartActiveStyles = !cartActiveStyles" class="cart_toggle"><img src="assets/img/shopping-cart-solid.svg" alt="cart-toggle"></span>
     <div class="cart_top-side">
 
       <h3>Your Cart</h3>
+      <legend *ngIf="contentType == 'bulk'">
+        <p>Small order (10+ total accounts) <span>Green Price</span></p>
+        <p>Medium Order (100+ total accounts) <span>Blue Price</span></p>
+        <p>Large Order (400+ total accounts) <span>Purple price</span></p>
+        <p>1000+total accs <span>Contact Us for individual price</span></p>
+      </legend>
 
       <ul *ngIf="cart.accounts.length > 0" class="cart_order-list">
 
@@ -40,8 +46,11 @@
       <p class="cart_checkout-cost">Total cost
         <span class="right">{{currencyMap[currency]}} {{cartTotalPrice | toFixed}}</span>
       </p>
-      <button>Buy now</button>
+      <ul *ngIf="contentType == 'checkout'" class="cart_total-cost-list">
+        <li>Subtotal <span>$120.49</span></li>
+        <li>Fee <span>$120.49</span></li>
+        <li>Taxes <span>$12.49</span></li>
+      </ul>
+      <button>{{contentType == 'checkout' ? "Proceed to payment" : "Buy now"}}</button>
     </div>
-
-  <!-- </div> -->
 </aside>

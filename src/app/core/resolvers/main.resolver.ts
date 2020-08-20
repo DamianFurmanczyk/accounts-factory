@@ -10,6 +10,7 @@ export class MainResolver implements Resolve<Observable<any>> {
   constructor(private stateS: StateService) {}
 
   resolve() {
+
         return forkJoin(
             this.stateS.loadDbAccountsToState(),
             this.stateS.loadDbCurrencyAndUsersCountryToState()

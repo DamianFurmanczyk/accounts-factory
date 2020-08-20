@@ -10,8 +10,11 @@ export class HomepageResolver implements Resolve<Observable<any>> {
   constructor(private stateS: StateService) {}
 
   resolve() {
-      if(this.stateS.resolversRun) return of(null);
+      if(this.stateS.resolversRun && this.stateS.state.accounts != null && this.stateS.state.allRegionsAccounts != null  && this.stateS.state.currency != null  && this.stateS.state.regions != null) return of(null);
       this.stateS.resolversRun = true;
+      this.stateS.laodCountries().subscribe();
+      this.stateS.laodAllRegionsAccounts().subscribe();
+      
       
         return forkJoin(
           this.stateS.loadDbAccountsToState(), 

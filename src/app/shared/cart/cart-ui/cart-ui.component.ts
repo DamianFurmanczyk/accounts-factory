@@ -12,6 +12,7 @@ import { CountryToCurrencyAbbrevMap } from './../../../core/utils/dataMaps/count
 })
 export class CartUiComponent implements OnInit {
   @Input() cart: cartState;
+  @Input() contentType: string;
   @Input() cartTotalPrice: number;
   @Input() currencyExchangeRate: number;
   @Input() currency: string;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StateService } from './../../../core/services/state.service';
 
 @Component({
   selector: 'app-bulk',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BulkComponent implements OnInit {
 
-  constructor() { }
+  constructor(public stateS: StateService) { }
 
   ngOnInit() {
   }
