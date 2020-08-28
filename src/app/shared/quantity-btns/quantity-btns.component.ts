@@ -12,7 +12,7 @@ export class QuantityBtnsComponent implements OnInit {
   @Input() accountQuantityNoDisplay = false;
   @Input() account: account;
 
-  @Output() quantityChange: EventEmitter<{acc: account, quantityAdded: -1|1}> = new EventEmitter();
+  @Output() quantityChange: EventEmitter<{acc: account, quantityAdded: number}> = new EventEmitter();
 
   constructor(public cartS: CartStateService, public stateS: StateService) { }
 

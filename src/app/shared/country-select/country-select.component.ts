@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-country-select',
@@ -8,12 +8,17 @@ import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 export class CountrySelectComponent implements OnInit, AfterViewInit {
   @Input() countries: string[];
   @Input() usersCountry: string;
+
+  @Output() getVat = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
   }
 
   ngAfterViewInit(): void {
+
+    const component = this;
+
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     var x, i, j, l, ll, selElmnt, a, b, c;
@@ -45,7 +50,8 @@ export class CountrySelectComponent implements OnInit, AfterViewInit {
         c.addEventListener("click", function (e) {
           // console.log('klik')
           // console.log(this.textContent.trim());
-          // console.log(this.dataset);
+          console.log(this.dataset);
+          component.getVat.emit(this.dataset.value);
           /* When an item is clicked, update the original select box,
           and the selected item: */
           var y, i, k, s, h, sl, yl;

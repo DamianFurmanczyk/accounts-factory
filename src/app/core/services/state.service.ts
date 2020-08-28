@@ -11,6 +11,7 @@ import { region } from './../models/regions.interface';
 import { currencyOrCountry } from '../models/usersCurrencyCountryResponse.interface';
 import { account } from 'src/app/core/models/accounts.interface';
 import { cartState } from './../models/cart.interface';
+import { vatRates } from './data/vat';
 
 @Injectable({
   providedIn: 'root'
@@ -58,16 +59,13 @@ export class StateService {
   }
 
   loadVatRate(countryCode: string) {
-    return this.dbS.getVatRate(countryCode).pipe(
-      first(),
-      tap((res) => {
-        // console.log(res)
+      const vat = vatRates.rates.find(el => el.code == countryCode).periods[0].rates.standard;
 
-        this.vatRate$.next(<number>res);
+      console.log(vat)
 
-        this.state = {...this.state, vatRate: res};
-      })
-    );
+        this.vatRate$.next(<number>vat);
+
+        this.state = {...this.state, vatRate: vat};
   }
 
   laodAllRegionsAccounts() {
@@ -111,7 +109,7 @@ export class StateService {
   
         this.state = {...this.state, currency, usersCountry};
         // console.log(this.state)
-        this.loadVatRate(usersCountry).subscribe();
+        this.loadVatRate(usersCountry);
       })
     );
   }

@@ -5,6 +5,7 @@
     [cartTotalPrice]="stateS.cartTotalPrice$ | async"
     (addToCart)="cartS.addToCart($event)"
     [currencyExchangeRate]="stateS.currencyExchangeRateToDollar$ | async"
+    [vat]="stateS.vatRate$ | async"
     (removeFromCart)="cartS.removeFromCart($event)"
     (changeCartAccountQuantity)="cartS.changeOrderQuantity($event)">
 </app-cart-ui>

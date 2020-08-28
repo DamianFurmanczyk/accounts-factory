@@ -4,7 +4,9 @@
         [countries]="stateS.countries$ | async"
         [usersCountry]="stateS.usersCountry$ | async"
         [cartTotalPrice]="stateS.cartTotalPrice$ | async" 
-        [currency]="stateS.currency$ | async">
+        [currency]="stateS.currency$ | async"
+        [vat]="stateS.vatRate$ | async"
+        (getVat)="stateS.loadVatRate($event)">
     </app-checkout-ui>
     </section>
 </main>

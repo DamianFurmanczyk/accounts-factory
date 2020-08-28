@@ -44,12 +44,13 @@
 
       <div class="cart_checkout-separator"></div>
       <p class="cart_checkout-cost">Total cost
-        <span class="right">{{currencyMap[currency]}} {{cartTotalPrice | toFixed}}</span>
+        <span *ngIf="contentType != 'checkout'" class="right">{{currencyMap[currency]}} {{cartTotalPrice | toFixed}}</span>
+        <span *ngIf="contentType == 'checkout'" class="right">{{currencyMap[currency]}} {{cartTotalPrice + cartTotalPrice*(vat/100) | toFixed}}</span>
       </p>
       <ul *ngIf="contentType == 'checkout'" class="cart_total-cost-list">
-        <li>Subtotal <span>$120.49</span></li>
-        <li>Fee <span>$120.49</span></li>
-        <li>Taxes <span>$12.49</span></li>
+        <li>Subtotal <span> {{cartTotalPrice + cartTotalPrice*(vat/100) | toFixed}} </span></li>
+        <li>Fee <span>{{ cartTotalPrice | toFixed }}</span></li>
+        <li>Taxes <span>{{ cartTotalPrice*(vat/100) | toFixed }}</span></li>
       </ul>
       <button>{{contentType == 'checkout' ? "Proceed to payment" : "Buy now"}}</button>
     </div>

@@ -32,11 +32,11 @@
     }
 
     legend {
-        line-height: 2.2;
         padding: 0 32px;
         margin-top: 1.3rem;
         p {
             display: flex;
+            margin-bottom: 1.2rem;
             font-weight: bold;
             justify-content: space-between;
             font-size: .9rem;
@@ -51,6 +51,7 @@
                 color: $purple;
             }
             &:nth-of-type(4) span {
+                margin-bottom: 0;
                 color: #B3B3B3;
             }
         }

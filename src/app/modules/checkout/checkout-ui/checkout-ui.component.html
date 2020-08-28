@@ -11,13 +11,12 @@
         <label for="idkman">Country</label>
         <app-country-select 
             [countries]="countriesArr"
-            [usersCountry]="countriesObj[usersCountry]">
+            [usersCountry]="countriesObj[usersCountry]"
+            (getVat)="getVat.emit($event)">
         </app-country-select>
 
         <label for="vat">VAT</label>
-        <select id="vat">
-            <option selected>siema</option>
-        </select>
+        <input id="vat" type="text" disabled [value]="vat">
         <small> *NOT NEEDED</small>
     </form>
 

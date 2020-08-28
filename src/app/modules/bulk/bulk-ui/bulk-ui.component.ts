@@ -16,14 +16,18 @@ export class BulkUiComponent implements OnInit {
 
   accountsGrouped;
 
+  cons(accounts) {
+    console.log(accounts)
+  }
+
   groupAccountsByRegion(accounts: account[]) {
     let accArr = [];
+
+    console.log(accounts);
 
     accounts.forEach(
       el => {
         let groupToAddTo = accArr.find(accArrEl => el.region_id == accArrEl.region_id);
-        console.log(el.region_id)
-        console.log(groupToAddTo)
         if(groupToAddTo) {
           groupToAddTo.count++;
           groupToAddTo.accounts[el.name] = +groupToAddTo.accounts[el.name] ? groupToAddTo.accounts[el.name] + 1 : 1;

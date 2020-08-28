@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { CheckoutPresenter } from './checkout-ui.pesenter';
 
 @Component({
@@ -11,6 +11,7 @@ import { CheckoutPresenter } from './checkout-ui.pesenter';
 export class CheckoutUiComponent implements OnInit {
   @Input() cartTotalPrice: number;
   @Input() currency: string;
+  @Input() vat: number;
   @Input() set countries(countries: {} | null) {
     console.log(countries)
     this.countriesObj = countries;
@@ -22,6 +23,9 @@ export class CheckoutUiComponent implements OnInit {
     console.log(this.countriesArr)
   };
   @Input() usersCountry: string;
+
+  @Output() getVat = new EventEmitter();
+
   countriesObj = {};
 
   countriesArr: {}[] = [];

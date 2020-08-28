@@ -46,10 +46,6 @@ export class DbService {
 		return this.http.get(this.apiUrl + 'coupon')
 	}
 
-	getVatRate(countryCode: string) {
-		return this.http.get('http://api.vatlookup.eu/rates/' + countryCode);
-	}
-
 	getAccounts(regionName: string) {
 		return this.http.get<accountsDataResponse>(this.apiUrl + 'accounts/regionname/' + regionName);
 	  }

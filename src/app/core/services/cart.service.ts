@@ -46,6 +46,7 @@ export class CartStateService {
   }
 
   addToCart(acc: account) {
+    console.log(acc);
     let accInCartStateWithIndex: {acc: account, i: number};
     this.stateS.state.cart.accounts.find((loopAccount, i) => {
       if (loopAccount.id == acc.id) {

@@ -1,5 +1,6 @@
 .order-summary {
     @include container(450px);
+    display: none;
 
     h4 {
         display: flex;
@@ -27,5 +28,11 @@
                 margin: .8rem 0;
             }
         }
+    }
+}
+
+@media (max-width: $m1) {
+    .order-summary {
+        display: block;
     }
 }
