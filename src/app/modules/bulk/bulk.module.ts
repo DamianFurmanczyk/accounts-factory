@@ -9,11 +9,13 @@ import { FooterModule } from './../../shared/footer/footer.module';
 import { CartModule } from './../../shared/cart/cart.module';
 import { NavModule } from './../../shared/nav/nav.module';
 
+import { PipesModule } from './../../core/pipes/pipes.module';
 @NgModule({
   declarations: [BulkComponent, BulkUiComponent],
   imports: [
-    CommonModule,
+  CommonModule,
     BulkRoutingModule,
+    PipesModule,
     FooterModule,
     CartModule,
     NavModule

@@ -3,81 +3,24 @@
         <div *ngFor="let accountsData of accountsGrouped" class="region-stats">
 
             <figure>
-                <img [src]="'assets/img/' + regionIdToNameMap[accountsData.region_id] + '.png'">
+                <img [src]="'assets/img/' + regionIdToNameMap[accountsData.regionId] + '.png'">
                 <figcaption>
-                    {{regionIdToNameMap[accountsData.region_id]}}
+                    {{regionIdToNameMap[accountsData.regionId]}}
                 </figcaption>
             </figure>
 
-            <div class="region-stats_stat">
+            <div class="region-stats_stat" *ngFor="let account of accountsData.accounts">
                 <span class="region-stats_stat-essence">
-                    40k
+                    {{mapNameToDust[account.name]}}
                 </span>
                 <div class="region-stats_stat-amount-input-wrapper">
-                    <input class="region-stats_stat-amount-input" type="text" [placeholder]="accountsData.accounts.Premium">
+                    <input class="region-stats_stat-amount-input" type="text" [placeholder]="'max: ' + account.codes_count">                    
+                    <span class="fa fa-plus" (click)="addToCart.emit(account)"></span>
                 </div>
                 <ul class="region-stats_stat-list">
-                    <li>$1.5</li>
-                    <li>$1.4</li>
-                    <li>$1</li>
-                </ul>
-            </div>
-
-            <div class="region-stats_stat">
-                <span class="region-stats_stat-essence">
-                    50k
-                </span>
-                <div class="region-stats_stat-amount-input-wrapper">
-                    <input class="region-stats_stat-amount-input" (change)="cons(accountsData)" type="text" [placeholder]="'max:' + accountsData.accounts.Premium">
-                    <span class="fa fa-plus" (click)="regionIdToNameMap[accountsData.region_id] + 'standard'"></span>
-                    <span class="fa fa-minus"></span>
-                </div>
-                <ul class="region-stats_stat-list">
-                    <li>$1.5</li>
-                    <li>$1.4</li>
-                    <li>$1</li>
-                </ul>
-            </div>
-
-            <div class="region-stats_stat">
-                <span class="region-stats_stat-essence">
-                    60k
-                </span>
-                <div class="region-stats_stat-amount-input-wrapper">
-                    <input class="region-stats_stat-amount-input" type="text" [placeholder]="accountsData.accounts.Premium">
-                </div>
-                <ul class="region-stats_stat-list">
-                    <li>$1.5</li>
-                    <li>$1.4</li>
-                    <li>$1</li>
-                </ul>
-            </div>
-
-            <div class="region-stats_stat">
-                <span class="region-stats_stat-essence">
-                    70k
-                </span>
-                <div class="region-stats_stat-amount-input-wrapper">
-                    <input class="region-stats_stat-amount-input" type="text" [placeholder]="accountsData.accounts.Premium">
-                </div>
-                <ul class="region-stats_stat-list">
-                    <li>$1.5</li>
-                    <li>$1.4</li>
-                    <li>$1</li>
-                </ul>
-            </div>
-
-            <div class="region-stats_stat">
-                <span class="region-stats_stat-essence">
-                    100k
-                </span>
-                <div class="region-stats_stat-amount-input-wrapper">
-                    <input class="region-stats_stat-amount-input" type="text" [placeholder]="accountsData.accounts.Premium">
-                </div>
-                <ul class="region-stats_stat-list">
-                    <li>$1.5</li>
-                    <li>$1.4</li>
-                    <li>$1</li>
+                    <li> {{account.small * currencyExchangeRate | toFixed}} {{currencyMap[currency]}} </li>
+                    <li> {{account.medium * currencyExchangeRate | toFixed}} {{currencyMap[currency]}} </li>
+                    <li> {{account.large * currencyExchangeRate | toFixed}} {{currencyMap[currency]}} </li>
                 </ul>
             </div>
 

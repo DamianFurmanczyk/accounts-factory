@@ -4,6 +4,9 @@
     
         <app-bulk-ui 
         [accounts]="stateS.allRegionsAccounts$ | async"
+        [currency]="stateS.currency$ | async"
+        [currencyExchangeRate]="stateS.currencyExchangeRateToDollar$ | async"
+        (addToCart)="cartS.addToCart($event)"
         [regionIdToNameMap]="stateS.regionIdToRegionNameMap"
         ></app-bulk-ui>
     </section>

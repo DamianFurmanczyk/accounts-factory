@@ -22,5 +22,13 @@
 
     small {
         margin: .8rem 0 4rem 0;
+
+        &.success {
+            color: $green;
+        }
+
+        &.error {
+            color: $purple;
+        }
     }
 }

@@ -45,32 +45,25 @@ export class CartStateService {
     this.stateS.cart$.next({...this.stateS.state.cart});
   }
 
-  addToCart(acc: {count: number, name: string, selQuantity, region_id}) {
+  addToCart(acc: account) {
     console.log(acc);
     let accInCartStateWithIndex: {acc: account, i: number};
+    this.stateS.state.cart.accounts.find((loopAccount, i) => {
+      if (loopAccount.id == acc.id) {
+        accInCartStateWithIndex = {acc: loopAccount, i};
+        return true;
+      }
+    });
 
-    const currentCount = this.stateS.state.cart.accounts[acc.region_id] ? 
-    this.stateS.state.cart.accounts[acc.region_id + '-' + acc.name] ? this.stateS.state.cart.accounts[acc.region_id + '-' +acc.name] : 0 
-    : 0,
-    newCount = +currentCount + +acc.selQuantity;
-
-    console.log(currentCount)
-    console.log(acc.selQuantity)
-    console.log('-')
-    console.log(newCount)
-
-    console.log(this.stateS.state.cart.accounts[acc.region_id])
-    console.log(!!this.stateS.state.cart.accounts[acc.region_id])
-
-    console.log(acc.region_id);
-
-    this.stateS.state.cart.accounts[acc.region_id] = this.stateS.state.cart.accounts[acc.region_id] || {};
-
-    this.stateS.state.cart.accounts = {...this.stateS.state.cart.accounts, 
-      [acc.region_id + '-' + acc.name]: newCount > acc.count  ? acc.count : newCount
-    };
-
-    console.log(this.stateS.state.cart.accounts);
+    if (accInCartStateWithIndex != undefined) {
+      let newQuantity = accInCartStateWithIndex.acc.selQuantity + acc.selQuantity;
+      if(acc.count < newQuantity) {
+        newQuantity = acc.count
+      }
+      this.stateS.state.cart.accounts[accInCartStateWithIndex.i] = { ...acc, selQuantity: newQuantity }
+    } else {
+      this.stateS.state.cart.accounts.push({ ...acc });
+    }
     this.stateS.cart$.next({ ...this.stateS.state.cart });
   }
 
@@ -80,6 +73,7 @@ export class CartStateService {
   }
 
   evaluateCartOrderPrice(cart: cartState) {
+    console.log(cart.accounts);
     let newTotal = 0;
     cart.accounts.forEach(acc => newTotal += acc.selQuantity * (+acc.price_usd * this.stateS.state.currencyExchangeRateToDollar));
     this.stateS.state.cart.orderPrice = newTotal;

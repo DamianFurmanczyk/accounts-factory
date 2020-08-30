@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { account } from 'src/app/core/models/accounts.interface';
-
+import { CountryToCurrencyAbbrevMap } from './../../../core/utils/dataMaps/countryToCurrencyAbbrevMap';
 @Component({
   selector: 'app-bulk-ui',
   templateUrl: './bulk-ui.component.html',
@@ -8,32 +8,41 @@ import { account } from 'src/app/core/models/accounts.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BulkUiComponent implements OnInit {
+  @Output() addToCart = new EventEmitter();
+
+  @Input() currency;
+  @Input() currencyExchangeRate;
   @Input() regionIdToNameMap = {};
   @Input() set accounts(accounts: account[]) {
     console.log(accounts);
     this.groupAccountsByRegion(accounts);
   }
 
+  currencyMap = CountryToCurrencyAbbrevMap;
+
   accountsGrouped;
 
-  cons(accounts) {
-    console.log(accounts)
-  }
+  mapNameToDust = {
+    'Basic': '40k',
+    'Standard': '50k',
+    'Premium': '60k',
+    'Capsules': 'Caps'
+  };
 
   groupAccountsByRegion(accounts: account[]) {
     let accArr = [];
+    const omitValues = ['Epic', 'Legendary'];
 
     console.log(accounts);
-
+  
     accounts.forEach(
-      el => {
-        let groupToAddTo = accArr.find(accArrEl => el.region_id == accArrEl.region_id);
-        if(groupToAddTo) {
-          groupToAddTo.count++;
-          groupToAddTo.accounts[el.name] = el.codes_count
-        }
-        else {
-          accArr.push({region_id: el.region_id, count: 1, accounts: {[el.name]: 1}});
+      accounts => {
+        if(omitValues.includes(accounts.name)) return;
+        const appropArr = accArr.find(el => el.regionId == accounts.region_id);
+        if(appropArr) {
+          appropArr.accounts.push(accounts);
+        } else {
+          accArr.push({regionId: accounts.region_id, accounts: [accounts]});
         }
       }
     );
