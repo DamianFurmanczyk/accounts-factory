@@ -1,5 +1,5 @@
 <section class="checkout">
-    <form [formGroup]="presenter.checkoutForm" class="identity-form">
+    <form [formGroup]="presenter.form" class="identity-form">
         <h3 class="checkout_heading">Identity</h3>
 
         <label for="name">Full Name</label>
@@ -15,9 +15,11 @@
             (getVat)="getVat.emit($event)">
         </app-country-select>
 
-        <label for="vat">VAT</label>
-        <input id="vat" type="text" disabled [value]="vat">
-        <small> *NOT NEEDED</small>
+        <label for="CompaniesNIP">Companies NIP</label>
+        <input formControlName="nip" id="CompaniesNIP" type="text">
+        <small [ngClass]="{'error': presenter.nipInputStatus == 'Error', 'success': presenter.nipInputStatus == 'Success'}"> 
+            {{presenter.nipInputStatusText}}
+             </small>
     </form>
 
     <section class="order-summary">

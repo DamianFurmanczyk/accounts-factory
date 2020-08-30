@@ -9,6 +9,7 @@ export interface account {
     updated_at: null | string,
     count?: number,
     selQuantity?: number
+    codes_count: number
 }
 
 export interface accountsDataResponse {

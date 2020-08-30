@@ -14,7 +14,7 @@ import { CountrySelectComponent } from './../../shared/country-select/country-se
 @NgModule({
   declarations: [CheckoutUiComponent, CheckoutComponent, CountrySelectComponent],
   imports: [
-  CommonModule,
+    CommonModule,
     CheckoutRoutingModule,
     CartModule,
     FormsModule,

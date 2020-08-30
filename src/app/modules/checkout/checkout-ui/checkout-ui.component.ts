@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { CheckoutPresenter } from './checkout-ui.pesenter';
+import { CheckoutPresenter } from './checkout-ui.presenter';
+import { iif } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-checkout-ui',
@@ -10,6 +12,8 @@ import { CheckoutPresenter } from './checkout-ui.pesenter';
 })
 export class CheckoutUiComponent implements OnInit {
   @Input() cartTotalPrice: number;
+  @Input() companyDataLoadError;
+  @Input() companyData;
   @Input() currency: string;
   @Input() vat: number;
   @Input() set countries(countries: {} | null) {
@@ -30,7 +34,14 @@ export class CheckoutUiComponent implements OnInit {
 
   countriesArr: {}[] = [];
 
-  constructor(public presenter: CheckoutPresenter) { } 
+  form: FormGroup;
+
+  onNipChange(value: number) {
+  }
+
+  constructor(public presenter: CheckoutPresenter) {
+    this.form = this.presenter.form;
+  } 
 
   ngOnInit() {
   }

@@ -23,6 +23,11 @@ export class DbService {
 		return this.http.get(this.apiUrl + `verify/${id}`);
 	}
 
+	verifyCompany(countryCode: string, id: string) {
+		return this.http.get(this.apiUrl + `checkVat/${countryCode}/${id}`);
+		// 7290014875
+	}
+
 	getCountries() {
 		return this.http.get('https://restcountries.eu/rest/v2/all').pipe(
 			map((res: any[]) => {

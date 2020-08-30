@@ -29,7 +29,7 @@
                 </span>
                 <div class="region-stats_stat-amount-input-wrapper">
                     <input class="region-stats_stat-amount-input" (change)="cons(accountsData)" type="text" [placeholder]="'max:' + accountsData.accounts.Premium">
-                    <span class="fa fa-plus"></span>
+                    <span class="fa fa-plus" (click)="regionIdToNameMap[accountsData.region_id] + 'standard'"></span>
                     <span class="fa fa-minus"></span>
                 </div>
                 <ul class="region-stats_stat-list">

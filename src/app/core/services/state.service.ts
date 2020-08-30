@@ -5,13 +5,14 @@ import { DbService } from './db.service';
 import * as clone from 'clone-deep';
 import { BehaviorSubject } from 'rxjs';
 
-import { first, tap } from 'rxjs/operators';
+import { first, tap, exhaustMap } from 'rxjs/operators';
 
 import { region } from './../models/regions.interface';
 import { currencyOrCountry } from '../models/usersCurrencyCountryResponse.interface';
 import { account } from 'src/app/core/models/accounts.interface';
 import { cartState } from './../models/cart.interface';
 import { vatRates } from './data/vat';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +25,13 @@ export class StateService {
     currency: null,
     countries: null,
     region: 'EUNE',
+    selectedCountryCode: null,
     accounts: null,
     vatRate: null,
     allRegionsAccounts: null,
     currencyExchangeRateToDollar: null,
+    companyData: null,
+    companyDataLoadError: null,
     cart: {
       accounts: [],
       coupon: null,
@@ -41,9 +45,11 @@ export class StateService {
   regionIdToRegionNameMap = {};
 
   regions$: BehaviorSubject<null | region[]> = new BehaviorSubject(this.state.regions);
+  companyData$: BehaviorSubject<any> = new BehaviorSubject(this.state.companyData);
+  companyDataLoadError$: BehaviorSubject<any> = new BehaviorSubject(this.state.companyDataLoadError);
   vatRate$: BehaviorSubject<null | number> = new BehaviorSubject(this.state.vatRate);
   countries$: BehaviorSubject<null | any[]> = new BehaviorSubject(this.state.countries);
-  accounts$: BehaviorSubject<account[] | null> = new BehaviorSubject(this.state.accounts);
+  accounts$: BehaviorSubject<any | null> = new BehaviorSubject(this.state.accounts);
   allRegionsAccounts$: BehaviorSubject<account[] | null> = new BehaviorSubject(this.state.allRegionsAccounts);
   currency$: BehaviorSubject<currencyOrCountry | string> = new BehaviorSubject(this.state.currency);
   usersCountry$: BehaviorSubject<currencyOrCountry | string> = new BehaviorSubject(this.state.usersCountry);
@@ -59,13 +65,35 @@ export class StateService {
   }
 
   loadVatRate(countryCode: string) {
-      const vat = vatRates.rates.find(el => el.code == countryCode).periods[0].rates.standard;
+    this.state.selectedCountryCode = countryCode;
 
-      console.log(vat)
+    const vatRecord = vatRates.rates.find(el => el.code == countryCode),
+    vat = vatRecord ? vatRecord.periods[0].rates.standard : 0;
 
-        this.vatRate$.next(<number>vat);
+    console.log(vat)
 
-        this.state = {...this.state, vatRate: vat};
+    this.vatRate$.next(<number>vat);
+
+    this.state = { ...this.state, vatRate: vat };
+  }
+
+  loadCompanyData(countryCode: string, id: string) {
+    return this.dbS.verifyCompany(countryCode, id).pipe(
+      first(),
+      tap(
+        (res: {valid: string, countryCode: string}) => {
+          console.log(res);
+
+          const valid = res.countryCode != 'PL' && res.valid == 'true';
+
+          valid && this.vatRate$.next(<number>0);
+          !valid && this.companyDataLoadError$.next(new HttpErrorResponse({}));
+          this.companyData$.next(valid);
+
+          this.state = { ...this.state, vatRate: valid ? 0 : this.state.vatRate, companyDataLoadError: valid ? null:  new HttpErrorResponse({}), companyData: valid ? res: null };
+        }
+      )
+    );
   }
 
   laodAllRegionsAccounts() {
@@ -74,8 +102,8 @@ export class StateService {
       tap((res) => {
         console.log(res);
         this.allRegionsAccounts$.next(<account[]>res);
-  
-        this.state = {...this.state, allRegionsAccounts: res};
+
+        this.state = { ...this.state, allRegionsAccounts: res };
         console.log(this.state)
       })
     );
@@ -87,8 +115,8 @@ export class StateService {
       tap((res: any) => {
         // // console.log(res);
         this.countries$.next(res);
-  
-        this.state = {...this.state, countries: res};
+
+        this.state = { ...this.state, countries: res };
       })
     );
   }
@@ -99,15 +127,15 @@ export class StateService {
       tap(res => {
         // // console.log(res);
         const currency = res[0][0],
-        usersCountry = res[2][0];
+          usersCountry = res[2][0];
         this.currency$.next(currency);
         this.usersCountry$.next(usersCountry);
 
         // console.log(res);
-  
+
         this.loadCurrencyExchangeRateToDollar(currency);
-  
-        this.state = {...this.state, currency, usersCountry};
+
+        this.state = { ...this.state, currency, usersCountry };
         // console.log(this.state)
         this.loadVatRate(usersCountry);
       })
@@ -120,7 +148,7 @@ export class StateService {
     ).subscribe(res => {
       // console.log(res)
 
-      this.state = {...this.state, currencyExchangeRateToDollar: res,  currency: currencyName};
+      this.state = { ...this.state, currencyExchangeRateToDollar: res, currency: currencyName };
       this.currencyExchangeRateToDollar$.next(<number>res);
       this.currency$.next(currencyName);
       // console.log(this.state)
@@ -131,17 +159,17 @@ export class StateService {
     this.loadCurrencyExchangeRateToDollar(currencyName);
   }
 
-  changeAccountSelectedQuantity(e: {acc: account, quantityAdded: number}) {
-    let targetAccInStateWithIndex: {acc: account, i: number};
+  changeAccountSelectedQuantity(e: { acc: account, quantityAdded: number }) {
+    let targetAccInStateWithIndex: { acc: account, i: number };
     this.state.accounts.find((loopAccount, i) => {
       if (loopAccount.id == e.acc.id) {
-        targetAccInStateWithIndex = {acc: loopAccount, i};
+        targetAccInStateWithIndex = { acc: loopAccount, i };
         return true;
       }
     });
-    
-    const selTargetAccQuantity = +this.state.accounts[targetAccInStateWithIndex.i].selQuantity, 
-    newQ = +selTargetAccQuantity + +e.quantityAdded;
+
+    const selTargetAccQuantity = +this.state.accounts[targetAccInStateWithIndex.i].selQuantity,
+      newQ = +selTargetAccQuantity + +e.quantityAdded;
 
     if (newQ < 1 || newQ > targetAccInStateWithIndex.acc.count) return;
 
@@ -159,7 +187,7 @@ export class StateService {
           el => this.regionIdToRegionNameMap[el.id] = el.name
         );
 
-        this.state = {...this.state, regions: res};
+        this.state = { ...this.state, regions: res };
         this.regions$.next(res);
       })
     );
@@ -177,9 +205,9 @@ export class StateService {
         let currIndex = 0;
         const resFormatted = res.acc.map(acc => {
           const count = res.count[currIndex++]
-          return {...acc, count, selQuantity: count > 0? 1 : 0}
+          return { ...acc, count, selQuantity: count > 0 ? 1 : 0 }
         })
-        this.state = {...this.state, accounts: resFormatted};
+        this.state = { ...this.state, accounts: resFormatted };
         this.accounts$.next(resFormatted);
       })
     );

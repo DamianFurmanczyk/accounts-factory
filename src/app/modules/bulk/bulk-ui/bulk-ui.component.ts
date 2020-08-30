@@ -30,7 +30,7 @@ export class BulkUiComponent implements OnInit {
         let groupToAddTo = accArr.find(accArrEl => el.region_id == accArrEl.region_id);
         if(groupToAddTo) {
           groupToAddTo.count++;
-          groupToAddTo.accounts[el.name] = +groupToAddTo.accounts[el.name] ? groupToAddTo.accounts[el.name] + 1 : 1;
+          groupToAddTo.accounts[el.name] = el.codes_count
         }
         else {
           accArr.push({region_id: el.region_id, count: 1, accounts: {[el.name]: 1}});
