@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
+import { ScrollService } from './../../../core/services/scroll.service';
 
 @Component({
   selector: 'app-nav-ui',
@@ -45,7 +46,7 @@ export class NavUiComponent implements OnInit {
   currencyOptions = this.initialCurrencyOptions;
   currencyOptionsToDisplay: string[] = [];
 
-  constructor() { }
+  constructor(public scrollS: ScrollService) { }
 
   ngOnInit() {
   }

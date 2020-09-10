@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { ThrowStmt } from '@angular/compiler';
 import { StateService } from './../../../core/services/state.service';
 
 @Injectable()
@@ -14,8 +13,8 @@ export class CheckoutPresenter {
   constructor(private formBuilder: FormBuilder, private stateS: StateService) {
     this.form = this.formBuilder.group({
       fullname: ['', Validators.required],
-      email: ['', Validators.required],
-      nip: ['', Validators.required]
+      email: ['', Validators.required, Validators.email],
+      nip: ['']
     });
 
     const presenter = this;
@@ -23,20 +22,28 @@ export class CheckoutPresenter {
     this.form.controls.nip.valueChanges.subscribe(val => this.handleNipInput(val, presenter));
   }
 
-    handleNipInput(val: string, presenter) {
-      console.log(val);
+    handleNipInput(v: string, presenter) {
+      if(!v.includes(',')) return presenter.nipInputStatusText = 'Wrong format';
+      const vData = [...v.split(',')],
+      vatValue = vData[1].trim(),
+      countryCodeGiven = vData[0].trim();
+
+      console.log(vatValue)
+
+      console.log(vatValue);
       console.log(presenter);
-      if(val.length == 0) {
+      if(vatValue.length == 0) {
         presenter.nipInputStatus = '';
         return presenter.nipInputStatusText = '*NOT NEEDED';
       }
-      if(val.length < 10) {
+      if(vatValue.length < 8) {
         presenter.nipInputStatusText = 'Too short';
         return presenter.nipInputStatus = 'Error';
       }
+      
       presenter.nipInputStatus = '';
       presenter.nipInputStatusText = 'Checking company information...';
-      presenter.stateS.loadCompanyData(presenter.stateS.state.selectedCountryCode, val).subscribe(res => {
+      presenter.stateS.loadCompanyData(countryCodeGiven, vatValue).subscribe(res => {
 
         if (presenter.stateS.state.companyData) {
         presenter.nipInputStatusText = 'Valid';
@@ -47,18 +54,6 @@ export class CheckoutPresenter {
           presenter.nipInputStatus = 'Error'; 
         }
       });
-    }
-
-    onStarClick(i: number) {
-    }
-
-    getReviewToAdd() {
-
-    }
-
-    submitAddReviewForm(e: Event) {
-      e.preventDefault();
-      this.form.reset();
     }
     
 }

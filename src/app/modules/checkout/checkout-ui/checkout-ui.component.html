@@ -8,19 +8,21 @@
         <label for="email">Email</label>
         <input formControlName="email" id="email" type="email">
 
-        <label for="idkman">Country</label>
+        <label>Country</label>
         <app-country-select 
             [countries]="countriesArr"
             [usersCountry]="countriesObj[usersCountry]"
             (getVat)="getVat.emit($event)">
         </app-country-select>
 
-        <label for="CompaniesNIP">Companies NIP</label>
-        <input formControlName="nip" id="CompaniesNIP" type="text">
-        <small [ngClass]="{'error': presenter.nipInputStatus == 'Error', 'success': presenter.nipInputStatus == 'Success'}"> 
+        <label for="CompaniesNIP">Companies VAT</label>
+        <input formControlName="nip" id="CompaniesNIP" [placeholder]="'eg: ' + selectedCountryCode + ', 1234567890'" type="text">
+        <small [ngClass]="{'error': presenter.nipInputStatus == 'Error', 'success': presenter.nipInputStatus == 'Success'}">
             {{presenter.nipInputStatusText}}
              </small>
     </form>
+
+    <p style="margin: -2rem 0 3rem 0; height: 0;">{{formError}}</p>
 
     <section class="order-summary">
         <h4>Total cost <span>{{currency}} {{cartTotalPrice}}</span></h4>
@@ -36,8 +38,8 @@
 
         <div class="payment_methods-wrapper">
 
-            <figure class="payment-method active">
-                <div class="payment-method_img-wrapper">
+            <figure class="payment-method" [ngClass]="{'active': paymentMethod == 'stripe'}">
+                <div (click)="paymentMethod = 'stripe'; submitPayment()" class="payment-method_img-wrapper">
                     <img src="assets/img/visa.svg" alt="Credit card">
                     <img src="assets/img/mastercard.svg" alt="Credit card">
                     <figcaption>
@@ -45,25 +47,25 @@
                     </figcaption>
                 </div>
             </figure>
-            <figure class="payment-method">
-                <div class="payment-method_img-wrapper">
+            <figure class="payment-method inactive" [ngClass]="{'active': paymentMethod == 'bank'}">
+                <div (click)="paymentMethod = 'bank'" class="payment-method_img-wrapper">
                     <img src="assets/img/payment-bank-transfer.svg" alt="Bank transfer">
                     <figcaption>
                         Bank transfer
                     </figcaption>
                 </div>
             </figure>
-            <figure class="payment-method">
-                <div class="payment-method_img-wrapper">
+            <figure class="payment-method" [ngClass]="{'active': paymentMethod == 'paypal'}">
+                <div (click)="paymentMethod = 'paypal'; submitPayment()" class="payment-method_img-wrapper">
                     <img src="assets/img/paypal.svg" alt="Paypal">
                     <figcaption>
                         Paypal
                     </figcaption>
                 </div>
             </figure>
-            <figure class="payment-method">
-                <div class="payment-method_img-wrapper">
-                    <img src="assets/img/visa.svg" alt="Cryptocurrency">
+            <figure class="payment-method inactive" [ngClass]="{'active': paymentMethod == 'crypto'}">
+                <div (click)="paymentMethod = 'crypto'" class="payment-method_img-wrapper">
+                    <img src="assets/img/bitcoinTransp.svg" alt="Cryptocurrency">
                     <figcaption>
                         Cryptocurrency
                     </figcaption>
@@ -71,10 +73,6 @@
             </figure>
 
         </div>
-
-        <!-- <div class="summary">
-            <h4>Total cost {{cartTotalPrice}} {{currency}}</h4>
-        </div> -->
 
     </section>
 

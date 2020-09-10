@@ -14,11 +14,11 @@
     align-items: center;
     flex-direction: column;
     margin-right: 20px;
-    padding: 1.4rem;
+    padding: 1.4rem 1rem;
     border-radius: .6rem;
     background: #fff;
     text-align: center;
-    min-width: 215px;
+    min-width: 185px;
 
     figure {
         height: 150px;
@@ -27,7 +27,7 @@
     }
     
     &_upper-text {
-        margin-top: 1rem;
+        margin-top: .6rem;
 
         span {
             white-space: nowrap;
@@ -41,8 +41,8 @@
         
         b {
             display: inline-block;
-            margin-top: 1.4rem;
-            margin-bottom: 1.6rem;
+            margin-top: 1rem;
+            margin-bottom: 1.2rem;
             font-weight: bolder;
             font-size: 1.7rem;
         }
@@ -75,13 +75,19 @@
     }
 }
 
+@media (min-width: 1940px) {
+    .account {
+        min-width: 215px;
+    }
+}
+
 @media (max-width: 1430px) {
     .accounts {
         width: 98%;
         margin: 6% auto;
         
         &_wrapper {
-            justify-content: start;
+            justify-content: unset;
             padding-bottom: 1rem;
         }
     }

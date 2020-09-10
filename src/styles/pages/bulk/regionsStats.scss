@@ -6,18 +6,19 @@
 
 .regions-stats-wrapper {
     width: calc(100% - 3rem);
-    padding-left: 3rem;
+    padding-left: 2rem;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
 .region-stats {
-    &:nth-of-type(n+6){
-        margin-top: 3rem;
-    }
+    width: calc(100%/3);
+    margin-top: 3rem;
 
-    width: 20%;
+    &:last-of-type {
+        margin-bottom: 4rem;
+    }
 
     figure {
         align-items: center;
@@ -58,7 +59,7 @@
                     cursor: initial;
                     position: absolute;
                     right: 0rem;
-                    color: transparentize($gray, .6);
+                    color: transparentize($gray, .4);
                     cursor: pointer;
                     top: 50%;
                     transform: translateY(-50%);
@@ -70,6 +71,8 @@
             }
 
             background: #fff;
+            font-size: .8rem;
+            vertical-align: super;
             width: 100%;
             padding: .9rem 0 .7rem .9rem;
             margin-right: .5rem;
@@ -125,27 +128,7 @@
     }
 }
 
-@media (max-width: 1600px) {
-    .region-stats {
-        margin-top: 3rem;
-    
-        width: calc(100%/4);
-    }
-}
-@media (max-width: 1070px) {
-    .region-stats {
-    
-        width: calc(100%/3);
-    }
-}
-@media (max-width: 750px) {
-    .region-stats {
-        margin-right: -2rem;
-    
-        width: calc(100%/2);
-    }
-}
-@media (max-width: 750px) {
+@media (max-width: 1050px) {
     .region-stats {
         margin-right: -2rem;
         &:last-of-type {
@@ -155,7 +138,8 @@
         width: calc(100%/2);
     }
 }
-@media (max-width: 550px) {
+
+@media (max-width: 750px) {
     .region-stats {
         display: flex;
         flex-direction: column;

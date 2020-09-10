@@ -135,6 +135,10 @@
             font-size: 1.1rem;
             letter-spacing: 1px;
             padding: 1.2rem 14px;
+
+            &.disabled {
+                background: $gray;
+            }
         }
     }
 

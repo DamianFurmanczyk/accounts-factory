@@ -18,6 +18,10 @@ const routes: Routes = [
         resolve: {HomepageResolver}
       },
       {
+        path: 'tos',
+        loadChildren: () => import('./modules/tos/tos.module').then(m => m.TosModule)
+      },
+      {
         path: 'bulk',
         loadChildren: () => import('./modules/bulk/bulk.module').then(m => m.BulkModule),
         resolve: {BulkResolver}
@@ -35,7 +39,7 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-exports: [RouterModule]
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
 

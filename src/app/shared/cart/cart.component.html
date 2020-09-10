@@ -1,11 +1,13 @@
-<app-cart-ui [cart]="stateS.cart$ | async"
+<app-cart-ui [cart]="contentType == 'bulk' ? (stateS.bulkCart$ | async) : stateS.cart$ | async"
     [mediumHideBreakdownFlag] ="mediumHideBreakdownFlag"
     [currency]="stateS.currency$ | async"
     [contentType]="contentType"
-    [cartTotalPrice]="stateS.cartTotalPrice$ | async"
+    [cartTotalPrice]="contentType == 'bulk' ? (stateS.bulkCartTotalPrice$ | async) : stateS.cartTotalPrice$ | async"
     (addToCart)="cartS.addToCart($event)"
     [currencyExchangeRate]="stateS.currencyExchangeRateToDollar$ | async"
+    [regionIdToNameMap]="stateS.regionIdToRegionNameMap"
     [vat]="stateS.vatRate$ | async"
-    (removeFromCart)="cartS.removeFromCart($event)"
+    [buttonDisabled]="contentType == 'bulk' && !(stateS.bulkCartEnoughItemsToPurchase$ | async)"
+    (removeFromCart)="contentType == 'bulk' ?  cartS.removeFromCart($event, true) : cartS.removeFromCart($event)"
     (changeCartAccountQuantity)="cartS.changeOrderQuantity($event)">
 </app-cart-ui>

@@ -33,38 +33,39 @@
                     </li>
                 </ul>
             </dl>
-            <!-- <h4>FAQ</h4>
-            <ul>
-                <li>
-                    <dt>1. Can I change account details?</dt>
-                    <dd></dd>
-                </li>
-                <li>
-                    <dt>2. I have not recived an account</dt>
-                    <dd></dd>
-                </li>
-                <li>
-                    <dt>3. What name will my account have?</dt>
-                    <dd></dd>
-                </li>
-                <li>
-                    <dt>4. My account got banned</dt>
-                    <dd></dd>
-                </li>
-                <li>
-                    <dt>5. How long does it take to deliver an account?</dt>
-                    <dd></dd>
-                </li>
-            </ul> -->
         </div>
+        
 
-        <div class="main-footer_links-list">
-            <ul>
-                <li>Homepage </li>
-                <li>Therms and conditions </li>
-                <li>Privacy policy </li>
-                <li>Contact </li>
-            </ul>
+        <div #linksCol class="links-lists-column">
+          <ul>
+            <li  (click)="scrollS.navigateAndScrollToElem('.bulk', '/bulk');"> Bulk </li>
+    
+              <li (click)="navigateToRoute('/')">
+                Homepage </li>
+    
+                <li (click)="navigateToRoute('/tos')"> Therms and conditions </li>
+    
+                <li (click)="scrollS.navigateAndScrollToElem('.privacy-policy', '/tos');"> Privacy policy </li>
+          </ul>
+    
+          <ul>
+    
+            <li class="trigger">Discord <br>
+              <ul class="expendable-list">
+                <li>Luka#5403</li>
+                <li>Petro#1468</li>
+              </ul>
+            </li>
+    
+            <li>Facebook</li>
+            <li class="trigger">Email us <br>
+              <ul class="expendable-list">
+                <li>office@accounts4life.com</li>
+              </ul>
+            </li>
+    
+          </ul>
+    
         </div>
     </div>
 </footer>

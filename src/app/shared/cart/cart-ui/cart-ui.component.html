@@ -16,7 +16,7 @@
         <li *ngFor="let acc of cart.accounts" class="cart_order-list-item">
           <div class="item-desc">
             <span class="quantity">{{acc.selQuantity}}x</span>
-            <p> {{acc.name}}
+            <p> {{acc.name}} {{regionIdToNameMap[acc.region_id]}}
               <small>{{acc.slug | slice:20}}</small>
             </p>
           </div>
@@ -52,6 +52,7 @@
         <li>Fee <span>{{ cartTotalPrice | toFixed }}</span></li>
         <li>Taxes <span>{{ cartTotalPrice*(vat/100) | toFixed }}</span></li>
       </ul>
-      <button>{{contentType == 'checkout' ? "Proceed to payment" : "Buy now"}}</button>
+      <button *ngIf="contentType != 'bulk'">{{contentType == 'checkout' ? "Proceed to payment" : "Buy now"}}</button>
+      <button *ngIf="contentType == 'bulk'" [disabled]="buttonDisabled" [ngClass]="{'disabled': buttonDisabled}">{{buttonDisabled ? ">10 accounts needed to proceed" : "Proceed to payment"}}</button>
     </div>
 </aside>

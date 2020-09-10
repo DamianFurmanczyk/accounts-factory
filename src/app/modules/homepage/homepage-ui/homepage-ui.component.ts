@@ -12,7 +12,18 @@ import { CountryToCurrencyAbbrevMap } from './../../../core/utils/dataMaps/count
 })
 export class HomepageUiComponent implements OnInit {
   @Input() regions: region[] | null;
-  @Input() accounts: account[] | null;
+  @Input() set accounts(accounts: account[] | null) {
+    if(!accounts) return;
+    const tempAccount = accounts[0];
+    
+    let newAccounts = [...accounts];
+    newAccounts[0] = accounts[accounts.length - 1];
+    newAccounts[accounts.length - 1] = tempAccount;
+    console.log( newAccounts)
+    console.log( accounts);
+
+    this.accountsToDisplay = newAccounts;
+  }
   @Input() currency: string | null;
   @Input() currencyExchangeRate: number | null;
 
@@ -20,6 +31,8 @@ export class HomepageUiComponent implements OnInit {
   @Output() removeFromCart: EventEmitter<account> = new EventEmitter();
   @Output() changeAccountQuantity: EventEmitter<{account: account, quantity: number}> = new EventEmitter();
   @Output() onRegionSelected: EventEmitter<string> = new EventEmitter();
+
+  accountsToDisplay: account[] | null = null;
 
   currencyMap = CountryToCurrencyAbbrevMap;
   

@@ -1,4 +1,6 @@
-import { Component, ChangeDetectionStrategy, ElementRef, ViewChild } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ElementRef, ViewChild, HostListener } from '@angular/core';
+import { ScrollService } from './../../../core/services/scroll.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer-ui',
@@ -7,17 +9,39 @@ import { Component, ChangeDetectionStrategy, ElementRef, ViewChild } from '@angu
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterUiComponent {
+  @HostListener('window:click', ['$event.target'])
+  onClick(targetElement: HTMLElement) {
+    this.elementsThatNeedToDeactivateOnWindowClick.forEach(
+      elArr=> elArr.forEach(
+        (el: HTMLElement) => {
+          targetElement == el || (targetElement == el.previousElementSibling && el.previousElementSibling.classList.contains('trigger'))? null : el.classList.remove('active')
+        }
+      )
+    )
+
+  }
+
+  elementsThatNeedToDeactivateOnWindowClick;
 
   @ViewChild('faqColumn', {static: true}) faqCol: ElementRef;
   @ViewChild('linksCol', {static: true}) linksCol: ElementRef;
   dds: NodeListOf<HTMLElement>;
   explendableUlsTriggers: NodeListOf<HTMLElement>;
 
-  constructor() { }
+  constructor(public scrollS: ScrollService, private router: Router) { }
+  
+  navigateToRoute(route: string) {
+    this.scrollS.scrollToTopOnNavigate();
+    this.router.navigate([route]);
+  }
 
   ngAfterViewInit() {
+
+    this.elementsThatNeedToDeactivateOnWindowClick = this.getElementsThatNeedToDeactivateOnWindowClick();
     this.faqCol.nativeElement.querySelectorAll('dt').forEach((el: HTMLElement) => el.addEventListener('click', toggleSiblingActiveClass))
     this.dds = this.faqCol.nativeElement.querySelectorAll('dd');
+    this.explendableUlsTriggers = this.linksCol.nativeElement.querySelectorAll('.trigger');
+    this.explendableUlsTriggers.forEach((el: HTMLElement) => el.addEventListener('click', toggleChildrenActiveClass));
     const FooterComponent = this;
 
     function  toggleSiblingActiveClass() {
@@ -36,4 +60,10 @@ export class FooterUiComponent {
     }
   }
 
+  getElementsThatNeedToDeactivateOnWindowClick() {
+      return  [
+        document.querySelectorAll('.main-footer_faq dd'),
+        document.querySelectorAll('.links-lists-column li')
+    ];
+  }
 }

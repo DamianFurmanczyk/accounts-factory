@@ -13,8 +13,14 @@
     &-method {
         margin-right: 20px;
         position: relative;
+        transition: .3s;
+        cursor: pointer;
 
-        &.active {
+        &.inactive {
+            cursor: not-allowed;
+        }
+
+        &.active:not(.inactive) {
             .payment-method_img-wrapper {
                 background: #fff;
                 @include blackish_shadow(70px, -30px, .6);

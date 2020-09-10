@@ -18,7 +18,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   providedIn: 'root'
 })
 export class StateService {
-  // should have used entities/objects instead of arrays
   state = {
     regions: null,
     usersCountry: null,
@@ -37,13 +36,21 @@ export class StateService {
       coupon: null,
       discount: 0,
       orderPrice: 0
-    }
+    },
+    bulkCart: {
+      accounts: [],
+      coupon: null,
+      discount: 0,
+      orderPrice: 0
+    },
+    bulkCartEnoughItemsToPurchase: null
   }
 
   resolversRun = false;
 
   regionIdToRegionNameMap = {};
 
+  bulkCartEnoughItemsToPurchase$: BehaviorSubject<null | boolean> = new BehaviorSubject(this.state.bulkCartEnoughItemsToPurchase);
   regions$: BehaviorSubject<null | region[]> = new BehaviorSubject(this.state.regions);
   companyData$: BehaviorSubject<any> = new BehaviorSubject(this.state.companyData);
   companyDataLoadError$: BehaviorSubject<any> = new BehaviorSubject(this.state.companyDataLoadError);
@@ -54,7 +61,10 @@ export class StateService {
   currency$: BehaviorSubject<currencyOrCountry | string> = new BehaviorSubject(this.state.currency);
   usersCountry$: BehaviorSubject<currencyOrCountry | string> = new BehaviorSubject(this.state.usersCountry);
   cart$: BehaviorSubject<cartState> = new BehaviorSubject(this.state.cart);
+  bulkCart$: BehaviorSubject<cartState> = new BehaviorSubject(this.state.bulkCart);
+  selectedCountryCode$: BehaviorSubject<string | null> = new BehaviorSubject(this.state.selectedCountryCode);
   cartTotalPrice$: BehaviorSubject<number | null> = new BehaviorSubject(this.state.cart.orderPrice);
+  bulkCartTotalPrice$: BehaviorSubject<number | null> = new BehaviorSubject(this.state.bulkCart.orderPrice);
   currencyExchangeRateToDollar$: BehaviorSubject<number | null> = new BehaviorSubject(this.state.cart.orderPrice);
 
   constructor(private dbS: DbService) {
@@ -66,6 +76,7 @@ export class StateService {
 
   loadVatRate(countryCode: string) {
     this.state.selectedCountryCode = countryCode;
+    this.selectedCountryCode$.next(countryCode);
 
     const vatRecord = vatRates.rates.find(el => el.code == countryCode),
     vat = vatRecord ? vatRecord.periods[0].rates.standard : 0;

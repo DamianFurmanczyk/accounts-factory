@@ -20,7 +20,7 @@ export class ScrollService {
         if(!el) return;
         const elY = window.document.querySelector(elSel).getBoundingClientRect()['y'] + + document.documentElement.scrollTop;
         window.scrollTo({
-            top: elY+70,
+            top: elY+370,
             behavior: 'smooth',
           });
           
@@ -38,7 +38,7 @@ export class ScrollService {
     }
 
     navigateAndScrollToElem(elSel: string, destination: string) {
-        // if this dest
+        console.log(destination)
         if(this.router.url == destination) {
             return this.scrollToElem(elSel)
         }

@@ -23,9 +23,12 @@ export class DbService {
 		return this.http.get(this.apiUrl + `verify/${id}`);
 	}
 
+	payment(cartJSON: string, paymentMethod: string, email: string, fullname: string, localPrice: string | number) {
+		return this.http.get(this.apiUrl + `koszyk/?cart=${cartJSON}&paymentMethod=${paymentMethod}&email=${email}&localPrice=${localPrice}&fullname=${fullname}`);
+	}
+
 	verifyCompany(countryCode: string, id: string) {
 		return this.http.get(this.apiUrl + `checkVat/${countryCode}/${id}`);
-		// 7290014875
 	}
 
 	getCountries() {
