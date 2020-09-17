@@ -1,8 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { CheckoutPresenter } from './checkout-ui.presenter';
-import { FormGroup } from '@angular/forms';
-import { DbService } from './../../../core/services/db.service';
-import { cartState } from './../../../core/models/cart.interface';
+import { StateService } from './../../../core/services/state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-checkout-ui',
@@ -11,7 +10,7 @@ import { cartState } from './../../../core/models/cart.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [CheckoutPresenter]
 })
-export class CheckoutUiComponent implements OnInit {
+export class CheckoutUiComponent implements OnInit, OnDestroy {
   @Input() cartTotalPrice: number;
   @Input() companyDataLoadError;
   @Input() companyData;
@@ -29,10 +28,10 @@ export class CheckoutUiComponent implements OnInit {
   };
   @Input() usersCountry: string;
   @Input() selectedCountryCode: string;
-  @Input() cart: cartState;
-  @Input() bulkCart: cartState;
 
   @Output() getVat = new EventEmitter();
+
+  sub: Subscription;
 
   countriesObj = {};
 
@@ -42,24 +41,24 @@ export class CheckoutUiComponent implements OnInit {
 
   countriesArr: {}[] = [];
 
-  form: FormGroup;
-
-  onNipChange(value: number) {
+  constructor(public presenter: CheckoutPresenter, private stateS: StateService) {
+    this.sub = this.presenter.form.valueChanges.subscribe(v => {
+      console.log(v);
+      this.stateS.state.checkoutFormState = v;
+      this.stateS.state.checkoutFormState = {...this.stateS.state.checkoutFormState, valid: this.presenter.form.valid};
+    });
   }
 
-  constructor(public presenter: CheckoutPresenter, private dbS: DbService) {
-    this.form = this.presenter.form;
-  }
-
-  submitPayment() {
-    if(this.form.invalid) return this.formError = "Form fields are not filled in correctly";
-
-    console.log(JSON.stringify(this.cart));
-    this.dbS.payment(JSON.stringify(this.cart.accounts), this.paymentMethod, 
-    this.presenter.controls.email.value, this.form.controls.fullname.value, this.cart.orderPrice).subscribe(console.log);
+  setPaymentMethod(v: string) {
+    this.paymentMethod = v;
+    this.stateS.state.checkoutFormState = {...this.stateS.state.checkoutFormState, paymentMethod: this.paymentMethod};
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
 }

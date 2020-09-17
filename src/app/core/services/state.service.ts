@@ -43,10 +43,14 @@ export class StateService {
       discount: 0,
       orderPrice: 0
     },
-    bulkCartEnoughItemsToPurchase: null
+    bulkCartEnoughItemsToPurchase: null,
+    checkoutFormState: null,
+    checkoutFormStateErrorMsg: null
   }
 
   resolversRun = false;
+
+  appropriateCartToShow: 'bulk' | 'main' | '' = '';
 
   regionIdToRegionNameMap = {};
 
@@ -66,12 +70,34 @@ export class StateService {
   cartTotalPrice$: BehaviorSubject<number | null> = new BehaviorSubject(this.state.cart.orderPrice);
   bulkCartTotalPrice$: BehaviorSubject<number | null> = new BehaviorSubject(this.state.bulkCart.orderPrice);
   currencyExchangeRateToDollar$: BehaviorSubject<number | null> = new BehaviorSubject(this.state.cart.orderPrice);
+  checkoutFormStateErrorMsg$: BehaviorSubject<null | string> = new BehaviorSubject(this.state.checkoutFormStateErrorMsg);
 
   constructor(private dbS: DbService) {
     // console.log(clone({ asd: '123' }));
     // this.loadDbRegionsToState();
     // this.loadDbCurrencyAndUsersCountryToState();
     // this.loadDbAccountsToState();
+  }
+
+  onCheckoutFormStateChange(state: any, invalid: boolean, paymentMethodNotChosen: boolean) {
+    this.state.checkoutFormState = state;
+    this.state.checkoutFormStateErrorMsg = state;
+    if(paymentMethodNotChosen) {
+      this.state.checkoutFormStateErrorMsg = 'Select payment method';
+      this.state.checkoutFormState = {...state, paymentMethod: this.state.checkoutFormStateErrorMsg};
+      this.checkoutFormStateErrorMsg$.next(this.state.checkoutFormStateErrorMsg);
+      return;
+    }
+
+    if(invalid) {
+      this.state.checkoutFormStateErrorMsg = 'Fill in the form';
+      this.state.checkoutFormState = {...state, paymentMethod: this.state.checkoutFormStateErrorMsg};
+      this.checkoutFormStateErrorMsg$.next(this.state.checkoutFormStateErrorMsg);
+      return;
+    }
+    
+    this.state.checkoutFormStateErrorMsg = '';
+    this.checkoutFormStateErrorMsg$.next(this.state.checkoutFormStateErrorMsg);
   }
 
   loadVatRate(countryCode: string) {

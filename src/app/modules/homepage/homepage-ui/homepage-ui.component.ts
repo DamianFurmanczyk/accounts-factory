@@ -7,8 +7,7 @@ import { CountryToCurrencyAbbrevMap } from './../../../core/utils/dataMaps/count
 @Component({
   selector: 'app-homepage-ui',
   templateUrl: './homepage-ui.component.html',
-  styleUrls: ['./homepage-ui.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./homepage-ui.component.scss']
 })
 export class HomepageUiComponent implements OnInit {
   @Input() regions: region[] | null;

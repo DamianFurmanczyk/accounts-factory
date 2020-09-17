@@ -1,10 +1,10 @@
 <aside class="cart" [ngClass]="{'active': cartActiveStyles, 
-    'mediumBreakdown': mediumHideBreakdownFlag, '--bulk': contentType == 'bulk', '--checkout': contentType == 'checkout'}">
+    'mediumBreakdown': mediumHideBreakdownFlag, '--bulk': contentType2 == 'bulk', '--checkout': contentType2 == 'checkout'}">
     <span (click)="cartActiveStyles = !cartActiveStyles" class="cart_toggle"><img src="assets/img/shopping-cart-solid.svg" alt="cart-toggle"></span>
     <div class="cart_top-side">
 
       <h3>Your Cart</h3>
-      <legend *ngIf="contentType == 'bulk'">
+      <legend *ngIf="contentType2 == 'bulk'">
         <p>Small order (10+ total accounts) <span>Green Price</span></p>
         <p>Medium Order (100+ total accounts) <span>Blue Price</span></p>
         <p>Large Order (400+ total accounts) <span>Purple price</span></p>
@@ -34,8 +34,6 @@
 
     </div>
 
-
-
     <p *ngIf="cart.accounts.length == 0" class="cart_empty-text">Actually nothing is here <br>
       <small>But you can change it</small>
     </p>
@@ -44,15 +42,22 @@
 
       <div class="cart_checkout-separator"></div>
       <p class="cart_checkout-cost">Total cost
-        <span *ngIf="contentType != 'checkout'" class="right">{{currencyMap[currency]}} {{cartTotalPrice | toFixed}}</span>
-        <span *ngIf="contentType == 'checkout'" class="right">{{currencyMap[currency]}} {{cartTotalPrice + cartTotalPrice*(vat/100) | toFixed}}</span>
+        <span *ngIf="contentType2 != 'checkout'" class="right">{{currencyMap[currency]}} {{cartTotalPrice | toFixed}}</span>
+        <span *ngIf="contentType2 == 'checkout'" class="right">{{currencyMap[currency]}} {{cartTotalPrice + cartTotalPrice*(vat/100) | toFixed}}</span>
       </p>
-      <ul *ngIf="contentType == 'checkout'" class="cart_total-cost-list">
+      <ul *ngIf="contentType2 == 'checkout'" class="cart_total-cost-list">
         <li>Subtotal <span> {{cartTotalPrice + cartTotalPrice*(vat/100) | toFixed}} </span></li>
         <li>Fee <span>{{ cartTotalPrice | toFixed }}</span></li>
         <li>Taxes <span>{{ cartTotalPrice*(vat/100) | toFixed }}</span></li>
       </ul>
-      <button *ngIf="contentType != 'bulk'">{{contentType == 'checkout' ? "Proceed to payment" : "Buy now"}}</button>
-      <button *ngIf="contentType == 'bulk'" [disabled]="buttonDisabled" [ngClass]="{'disabled': buttonDisabled}">{{buttonDisabled ? ">10 accounts needed to proceed" : "Proceed to payment"}}</button>
+      <button (click)="contentType2 == 'checkout' && submitPayment();" *ngIf="contentType2 != 'bulk' && contentType2 != 'homepage'">{{contentType2 == 'checkout' ? "Proceed to payment" : "Buy now"}}</button>
+      
+      <button *ngIf="contentType2 == 'bulk'" (click)="stateS.appropriateCartToShow = 'bulk'" [disabled]="buttonDisabled" [routerLink]="['/checkout']" [ngClass]="{'disabled': buttonDisabled}">
+        {{buttonDisabled ? ">10 accounts needed to proceed" : "Proceed to payment"}}
+      </button>
+
+      <button *ngIf="contentType2 == 'homepage'" (click)="stateS.appropriateCartToShow = 'main'" [routerLink]="['/checkout']" routerLinkActive="router-link-active"  [disabled]="buttonDisabled" [ngClass]="{'disabled': buttonDisabled}">
+        {{buttonDisabled ? ">10 accounts needed to proceed" : "Proceed to payment"}}
+      </button>
     </div>
 </aside>

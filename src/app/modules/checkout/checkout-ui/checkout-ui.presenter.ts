@@ -13,7 +13,7 @@ export class CheckoutPresenter {
   constructor(private formBuilder: FormBuilder, private stateS: StateService) {
     this.form = this.formBuilder.group({
       fullname: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
+      email: ['', Validators.required],
       nip: ['']
     });
 
@@ -23,10 +23,11 @@ export class CheckoutPresenter {
   }
 
     handleNipInput(v: string, presenter) {
-      if(!v.includes(',')) return presenter.nipInputStatusText = 'Wrong format';
-      const vData = [...v.split(',')],
+      const vData = [v.substr(0, 2), v.substr(2)],
       vatValue = vData[1].trim(),
       countryCodeGiven = vData[0].trim();
+
+      console.log(vData)
 
       console.log(vatValue)
 

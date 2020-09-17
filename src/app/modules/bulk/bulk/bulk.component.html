@@ -7,6 +7,7 @@
         [currency]="stateS.currency$ | async"
         [currencyExchangeRate]="stateS.currencyExchangeRateToDollar$ | async"
         (addToCart)="cartS.addToCart($event)"
+        (setAppropriateCartToShow)="stateS.appropriateCartToShow = $event;"
         [regionIdToNameMap]="stateS.regionIdToRegionNameMap"
         ></app-bulk-ui>
     </section>
@@ -14,4 +15,4 @@
     <app-footer></app-footer>
 </main>
 
-<app-cart [contentType]="'bulk'"></app-cart>
+<app-cart [contentType]="'bulk'" (setAppropriate)="stateS.appropriateCartToShow = 'bulk';"></app-cart>

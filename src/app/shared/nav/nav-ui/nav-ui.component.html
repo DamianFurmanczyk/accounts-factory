@@ -1,8 +1,6 @@
 <nav [ngClass]="{'homepage': homepageStyles, 'active': navActiveFlag}" class="nav">
     <div class="nav_content-wrapper">
-        <figure routerLink="/" class="nav_logo">
-            <img src="assets/img/JP.png" alt="Accounts Factory logo">
-        </figure>
+        <img src="assets/img/accountLogo.svg" alt="Accounts Factory logo" routerLink="/" class="nav_logo">
 
         <div class="nav_ulNdropdown">
             <ul class="nav_links-list">
@@ -29,10 +27,9 @@
                 </ul>
             </div>
 
-
         </div>
     </div>
     <span #hamburger class="hamburger" [ngClass]="{'hamburger--open': navActiveFlag}" (click)="navActiveFlag = !navActiveFlag" href="#">
         <div class="hamburger__inner"></div>
-      </span>  
+      </span>
 </nav>

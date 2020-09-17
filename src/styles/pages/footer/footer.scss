@@ -153,8 +153,9 @@
         margin-top: -2rem;
         width: 200px;
         img {
+            height: 100px;
             display: block;
-            margin-bottom: .8rem;
+            margin: 0 auto 1.8rem auto;
         }
         figcaption {
             font-size: 1.1rem;

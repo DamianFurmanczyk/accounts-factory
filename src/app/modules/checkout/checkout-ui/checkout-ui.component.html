@@ -16,7 +16,7 @@
         </app-country-select>
 
         <label for="CompaniesNIP">Companies VAT</label>
-        <input formControlName="nip" id="CompaniesNIP" [placeholder]="'eg: ' + selectedCountryCode + ', 1234567890'" type="text">
+        <input formControlName="nip" id="CompaniesNIP" [placeholder]="'eg: ' + selectedCountryCode + '1234567890'" type="text">
         <small [ngClass]="{'error': presenter.nipInputStatus == 'Error', 'success': presenter.nipInputStatus == 'Success'}">
             {{presenter.nipInputStatusText}}
              </small>
@@ -39,7 +39,7 @@
         <div class="payment_methods-wrapper">
 
             <figure class="payment-method" [ngClass]="{'active': paymentMethod == 'stripe'}">
-                <div (click)="paymentMethod = 'stripe'; submitPayment()" class="payment-method_img-wrapper">
+                <div (click)="setPaymentMethod('stripe')" class="payment-method_img-wrapper">
                     <img src="assets/img/visa.svg" alt="Credit card">
                     <img src="assets/img/mastercard.svg" alt="Credit card">
                     <figcaption>
@@ -48,7 +48,7 @@
                 </div>
             </figure>
             <figure class="payment-method inactive" [ngClass]="{'active': paymentMethod == 'bank'}">
-                <div (click)="paymentMethod = 'bank'" class="payment-method_img-wrapper">
+                <div (click)="null;" class="payment-method_img-wrapper">
                     <img src="assets/img/payment-bank-transfer.svg" alt="Bank transfer">
                     <figcaption>
                         Bank transfer
@@ -56,7 +56,7 @@
                 </div>
             </figure>
             <figure class="payment-method" [ngClass]="{'active': paymentMethod == 'paypal'}">
-                <div (click)="paymentMethod = 'paypal'; submitPayment()" class="payment-method_img-wrapper">
+                <div (click)="setPaymentMethod('paypal')" class="payment-method_img-wrapper">
                     <img src="assets/img/paypal.svg" alt="Paypal">
                     <figcaption>
                         Paypal
@@ -64,7 +64,7 @@
                 </div>
             </figure>
             <figure class="payment-method inactive" [ngClass]="{'active': paymentMethod == 'crypto'}">
-                <div (click)="paymentMethod = 'crypto'" class="payment-method_img-wrapper">
+                <div (click)="null;" class="payment-method_img-wrapper">
                     <img src="assets/img/bitcoinTransp.svg" alt="Cryptocurrency">
                     <figcaption>
                         Cryptocurrency

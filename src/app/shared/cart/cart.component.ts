@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CartStateService } from './../../core/services/cart.service';
 import { StateService } from './../../core/services/state.service';
 
@@ -10,6 +10,8 @@ import { StateService } from './../../core/services/state.service';
 export class CartComponent implements OnInit {
   @Input() contentType: string;
   @Input() mediumHideBreakdownFlag = false;
+
+  @Output() setAppropriate: EventEmitter<string> = new EventEmitter();
 
   constructor(public cartS: CartStateService, public stateS: StateService) { }
 
