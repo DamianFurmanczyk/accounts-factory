@@ -46,12 +46,13 @@ export class CheckoutUiComponent implements OnInit, OnDestroy {
       console.log(v);
       this.stateS.state.checkoutFormState = v;
       this.stateS.state.checkoutFormState = {...this.stateS.state.checkoutFormState, valid: this.presenter.form.valid};
+      this.stateS.onCheckoutFormStateChange(this.stateS.state.checkoutFormState, this.presenter.form.valid, this.paymentMethod);
     });
   }
 
   setPaymentMethod(v: string) {
     this.paymentMethod = v;
-    this.stateS.state.checkoutFormState = {...this.stateS.state.checkoutFormState, paymentMethod: this.paymentMethod};
+    this.stateS.onCheckoutFormStateChange(this.stateS.state.checkoutFormState, this.presenter.form.valid, this.paymentMethod);
   }
 
   ngOnInit() {

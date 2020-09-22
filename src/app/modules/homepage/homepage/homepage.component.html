@@ -4,6 +4,7 @@
 
         <app-homepage-ui 
             [regions]="stateS.regions$ | async"
+            [regionActive]="stateS.regionActive$ | async"
             [accounts]="stateS.accounts$ | async"
             [currency]="stateS.currency$ | async"
             [currencyExchangeRate]="stateS.currencyExchangeRateToDollar$ | async"

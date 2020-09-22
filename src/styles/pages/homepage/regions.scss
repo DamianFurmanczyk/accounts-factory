@@ -19,13 +19,14 @@
             margin-bottom: 1rem;
         }
 
-        img {
-            filter: invert(28%) sepia(84%) saturate(3261%) hue-rotate(225deg) brightness(96%) contrast(90%);
+        .region.active img{
+                filter: invert(28%) sepia(84%) saturate(3261%) hue-rotate(225deg) brightness(96%) contrast(90%);
         }
+
     }
 }
 
-@media (max-width: 1550px) {
+@media (max-width: 1350px) {
     .regions {
         width: 85%;
         margin: 5% auto;

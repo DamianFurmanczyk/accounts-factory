@@ -12,6 +12,13 @@
     flex-direction: column;
     justify-content: space-between;
 
+    .ps-content {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
     &_total-cost-list {
         margin: .8rem 0 1.4rem 0;
         padding-left: 10px;
@@ -102,6 +109,23 @@
         font-weight: bold;
         text-align: center;
         padding-top: 3rem;
+
+        span {
+            transition: .3s;
+            color: $gray;
+            cursor: pointer;
+            text-shadow: 0 6px 42px $blue;
+            color: darken($gray, 10%);
+
+            &::selection {
+                background: transparent;
+            }
+
+            &.active {
+                color: darken($gray, 30%);
+                text-shadow: 0 6px 27px $blue;
+            }
+        }
     }
 
     &_empty-text {
@@ -150,6 +174,7 @@
 
     &_order-list {
         margin-top: 2rem;
+
 
         .quantity {
             display: inline-block;

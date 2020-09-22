@@ -56,6 +56,7 @@ export class StateService {
 
   bulkCartEnoughItemsToPurchase$: BehaviorSubject<null | boolean> = new BehaviorSubject(this.state.bulkCartEnoughItemsToPurchase);
   regions$: BehaviorSubject<null | region[]> = new BehaviorSubject(this.state.regions);
+  regionActive$: BehaviorSubject<null | string> = new BehaviorSubject(this.state.region);
   companyData$: BehaviorSubject<any> = new BehaviorSubject(this.state.companyData);
   companyDataLoadError$: BehaviorSubject<any> = new BehaviorSubject(this.state.companyDataLoadError);
   vatRate$: BehaviorSubject<null | number> = new BehaviorSubject(this.state.vatRate);
@@ -71,6 +72,7 @@ export class StateService {
   bulkCartTotalPrice$: BehaviorSubject<number | null> = new BehaviorSubject(this.state.bulkCart.orderPrice);
   currencyExchangeRateToDollar$: BehaviorSubject<number | null> = new BehaviorSubject(this.state.cart.orderPrice);
   checkoutFormStateErrorMsg$: BehaviorSubject<null | string> = new BehaviorSubject(this.state.checkoutFormStateErrorMsg);
+  checkoutFormState$: BehaviorSubject<null | string> = new BehaviorSubject(this.state.checkoutFormState);
 
   constructor(private dbS: DbService) {
     // console.log(clone({ asd: '123' }));
@@ -79,25 +81,29 @@ export class StateService {
     // this.loadDbAccountsToState();
   }
 
-  onCheckoutFormStateChange(state: any, invalid: boolean, paymentMethodNotChosen: boolean) {
+  onCheckoutFormStateChange(state: any, invalid: boolean, paymentMethod: string) {
+    console.log(paymentMethod)
     this.state.checkoutFormState = state;
     this.state.checkoutFormStateErrorMsg = state;
-    if(paymentMethodNotChosen) {
+    if(paymentMethod == '') {
       this.state.checkoutFormStateErrorMsg = 'Select payment method';
-      this.state.checkoutFormState = {...state, paymentMethod: this.state.checkoutFormStateErrorMsg};
+      this.state.checkoutFormState = {...state, paymentMethod};
       this.checkoutFormStateErrorMsg$.next(this.state.checkoutFormStateErrorMsg);
+      this.checkoutFormState$.next(this.state.checkoutFormState);
       return;
     }
 
     if(invalid) {
       this.state.checkoutFormStateErrorMsg = 'Fill in the form';
-      this.state.checkoutFormState = {...state, paymentMethod: this.state.checkoutFormStateErrorMsg};
+      this.state.checkoutFormState = {...state, paymentMethod};
+      this.checkoutFormState$.next(this.state.checkoutFormState);
       this.checkoutFormStateErrorMsg$.next(this.state.checkoutFormStateErrorMsg);
       return;
     }
     
     this.state.checkoutFormStateErrorMsg = '';
     this.checkoutFormStateErrorMsg$.next(this.state.checkoutFormStateErrorMsg);
+    this.checkoutFormState$.next({...this.state.checkoutFormState, paymentMethod});
   }
 
   loadVatRate(countryCode: string) {
@@ -232,6 +238,10 @@ export class StateService {
 
   updateAccountsBasedOnRegion(regionSelected: string) {
     this.state.region = regionSelected;
+    this.regionActive$.next(regionSelected);
+    console.log(regionSelected);
+    console.log(this.state.regions);
+
     this.loadDbAccountsToState().subscribe();
   }
 

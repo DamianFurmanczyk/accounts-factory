@@ -11,12 +11,15 @@ import { CartModule } from './../../shared/cart/cart.module';
 
 import { CountrySelectComponent } from './../../shared/country-select/country-select.component';
 
+import { PipesModule } from './../../core/pipes/pipes.module';
+
 @NgModule({
   declarations: [CheckoutUiComponent, CheckoutComponent, CountrySelectComponent],
   imports: [
     CommonModule,
     CheckoutRoutingModule,
     CartModule,
+    PipesModule,
     FormsModule,
     ReactiveFormsModule
   ]

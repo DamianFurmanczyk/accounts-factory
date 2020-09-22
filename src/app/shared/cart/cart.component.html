@@ -6,6 +6,7 @@
     (addToCart)="cartS.addToCart($event)"
     [currencyExchangeRate]="stateS.currencyExchangeRateToDollar$ | async"
     [regionIdToNameMap]="stateS.regionIdToRegionNameMap"
+    [checkoutFormState]="stateS.checkoutFormState$ | async"
     [vat]="stateS.vatRate$ | async"
     [buttonDisabled]="contentType == 'bulk' && !(stateS.bulkCartEnoughItemsToPurchase$ | async)"
     (removeFromCart)="contentType == 'bulk' ?  cartS.removeFromCart($event, true) : cartS.removeFromCart($event)"

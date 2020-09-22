@@ -17,7 +17,7 @@
   <perfect-scrollbar>
     <div class="regions_wrapper">
 
-      <figure class="region" (click)="onRegionSelected.emit(region.name)" class="region" *ngFor="let region of regions">
+      <figure class="region" [ngClass]="{'active': regionActive == region.name}" (click)="onRegionSelected.emit(region.name)" class="region" *ngFor="let region of regions">
         <figcaption>
           {{region.name}}
         </figcaption>
@@ -33,7 +33,7 @@
   <perfect-scrollbar>
     <div class="accounts_wrapper">
 
-      <div class="account" *ngFor="let acc of accountsToDisplay">
+      <div class="account" *ngFor="let acc of accounts">
         <figure>
           <img [src]="'assets/img/' + acc.name + '.svg'" alt="essence_img">
         </figure>

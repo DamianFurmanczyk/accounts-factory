@@ -26,6 +26,7 @@ export class CartStateService {
   }
 
   changeOrderQuantity(e: {acc: account, quantityAdded: number}) {
+    console.log(e.acc)
     const bulkCartFlag = !!e.acc.codes_count;
 
     let targetAccInStateWithIndex: {acc: account, i: number};
