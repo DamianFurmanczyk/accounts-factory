@@ -1,8 +1,20 @@
+.active-region {
+    font-size: 1.7rem;
+    text-align: center;
+    text-shadow: 0 2px 6px $blue;
+    letter-spacing: .2px;
+    margin-top: -2rem;
+}
+
 .regions {
     margin: 3.5% 0;
     padding: 3rem 0;
     text-align: center;
     font-weight: bolder;
+
+    .region {
+        cursor: pointer;
+    }
 
     h2 {
         font-size: 2.1rem;
@@ -20,7 +32,8 @@
         }
 
         .region.active img{
-                filter: invert(28%) sepia(84%) saturate(3261%) hue-rotate(225deg) brightness(96%) contrast(90%);
+            transition: .3s;
+            filter: invert(28%) sepia(84%) saturate(3261%) hue-rotate(225deg) brightness(96%) contrast(90%);
         }
 
     }

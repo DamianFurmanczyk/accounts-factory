@@ -97,6 +97,7 @@ export class CartUiComponent implements OnInit, OnDestroy {
   swapCarts() {
     // if (JSON.stringify(this.cart) == JSON.stringify(this.stateS.state.cart)) {
       this.bulkActiveFlag = !this.bulkActiveFlag;
+      console.log(this.bulkActiveFlag)
 
     if (this.bulkActiveFlag) {
       console.log('bulk')

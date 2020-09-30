@@ -5,7 +5,7 @@ import { DbService } from './db.service';
 import * as clone from 'clone-deep';
 import { BehaviorSubject } from 'rxjs';
 
-import { first, tap, exhaustMap } from 'rxjs/operators';
+import { first, tap, exhaustMap, catchError } from 'rxjs/operators';
 
 import { region } from './../models/regions.interface';
 import { currencyOrCountry } from '../models/usersCurrencyCountryResponse.interface';
@@ -123,17 +123,30 @@ export class StateService {
   loadCompanyData(countryCode: string, id: string) {
     return this.dbS.verifyCompany(countryCode, id).pipe(
       first(),
+      catchError((err) => {
+        throw 'Country code err';
+      }),
       tap(
         (res: {valid: string, countryCode: string}) => {
           console.log(res);
 
-          const valid = res.countryCode != 'PL' && res.valid == 'true';
+          const valid = res.valid == 'true';
+
+          if(res.countryCode == 'PL' && res.valid == 'true') {
+            valid && this.vatRate$.next(<number>0);
+            this.companyData$.next(res);
+
+              this.state = { ...this.state, vatRate: 0, companyDataLoadError: null, companyData: res };
+
+              return;
+          }
 
           valid && this.vatRate$.next(<number>0);
           !valid && this.companyDataLoadError$.next(new HttpErrorResponse({}));
-          this.companyData$.next(valid);
+          this.companyData$.next(res);
 
-          this.state = { ...this.state, vatRate: valid ? 0 : this.state.vatRate, companyDataLoadError: valid ? null:  new HttpErrorResponse({}), companyData: valid ? res: null };
+          this.state = { ...this.state, vatRate: valid ? 0 : this.state.vatRate, companyDataLoadError: valid ? 
+            null:  new HttpErrorResponse({}), companyData: valid ? res: null };
         }
       )
     );

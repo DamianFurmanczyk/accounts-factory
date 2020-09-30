@@ -13,10 +13,13 @@ import { CountrySelectComponent } from './../../shared/country-select/country-se
 
 import { PipesModule } from './../../core/pipes/pipes.module';
 
+import { LoaderModule } from './../../shared/loader/loader.module';
+
 @NgModule({
   declarations: [CheckoutUiComponent, CheckoutComponent, CountrySelectComponent],
   imports: [
     CommonModule,
+    LoaderModule,
     CheckoutRoutingModule,
     CartModule,
     PipesModule,

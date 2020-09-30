@@ -18,6 +18,9 @@
         <label for="CompaniesNIP">Companies VAT</label>
         <input formControlName="nip" id="CompaniesNIP" [placeholder]="'eg: ' + selectedCountryCode + '1234567890'" type="text">
         <small [ngClass]="{'error': presenter.nipInputStatus == 'Error', 'success': presenter.nipInputStatus == 'Success'}">
+            <app-loader-comp *ngIf="presenter.showLoader"></app-loader-comp> 
+            <span class="fa fa-check" *ngIf="presenter.nipInputStatus == 'Success'"></span>
+            <span class="fa fa-times" *ngIf="presenter.nipInputStatus == 'Error'"></span>
             {{presenter.nipInputStatusText}}
              </small>
     </form>
