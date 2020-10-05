@@ -4,6 +4,7 @@
     [contentType]="contentType"
     [cartTotalPrice]="contentType == 'bulk' ? (stateS.bulkCartTotalPrice$ | async) : stateS.cartTotalPrice$ | async"
     (addToCart)="cartS.addToCart($event)"
+    [paymentMethod]="stateS.paymentMethod$ | async"
     [currencyExchangeRate]="stateS.currencyExchangeRateToDollar$ | async"
     [regionIdToNameMap]="stateS.regionIdToRegionNameMap"
     [checkoutFormState]="stateS.checkoutFormState$ | async"

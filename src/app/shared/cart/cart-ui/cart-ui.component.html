@@ -42,7 +42,7 @@
             (quantityChange)="changeCartAccountQuantity.emit($event)">
           </app-quantity-btns>
 
-          <span class="price">{{acc.price_usd *currencyExchangeRate * acc.selQuantity | toFixed}}
+          <span class="price">{{+acc.price_usd *currencyExchangeRate * acc.selQuantity | toFixed}}
             {{currencyMap[currency]}}</span>
           <span *ngIf="!(contentType2 == 'checkout')" (click)="removeFromCart.emit(acc)" class="fa fa-trash"></span>
         </li>

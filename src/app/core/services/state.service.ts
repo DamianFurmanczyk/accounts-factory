@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { DbService } from './db.service';
 
-import * as clone from 'clone-deep';
 import { BehaviorSubject } from 'rxjs';
 
-import { first, tap, exhaustMap, catchError } from 'rxjs/operators';
+import { first, tap, catchError } from 'rxjs/operators';
 
 import { region } from './../models/regions.interface';
 import { currencyOrCountry } from '../models/usersCurrencyCountryResponse.interface';
@@ -13,6 +12,7 @@ import { account } from 'src/app/core/models/accounts.interface';
 import { cartState } from './../models/cart.interface';
 import { vatRates } from './data/vat';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +45,8 @@ export class StateService {
     },
     bulkCartEnoughItemsToPurchase: null,
     checkoutFormState: null,
-    checkoutFormStateErrorMsg: null
+    checkoutFormStateErrorMsg: 'Fill in the form',
+    paymentMethod: null
   }
 
   resolversRun = false;
@@ -57,6 +58,7 @@ export class StateService {
   bulkCartEnoughItemsToPurchase$: BehaviorSubject<null | boolean> = new BehaviorSubject(this.state.bulkCartEnoughItemsToPurchase);
   regions$: BehaviorSubject<null | region[]> = new BehaviorSubject(this.state.regions);
   regionActive$: BehaviorSubject<null | string> = new BehaviorSubject(this.state.region);
+  paymentMethod$: BehaviorSubject<null | string> = new BehaviorSubject(this.state.paymentMethod);
   companyData$: BehaviorSubject<any> = new BehaviorSubject(this.state.companyData);
   companyDataLoadError$: BehaviorSubject<any> = new BehaviorSubject(this.state.companyDataLoadError);
   vatRate$: BehaviorSubject<null | number> = new BehaviorSubject(this.state.vatRate);
@@ -74,29 +76,47 @@ export class StateService {
   checkoutFormStateErrorMsg$: BehaviorSubject<null | string> = new BehaviorSubject(this.state.checkoutFormStateErrorMsg);
   checkoutFormState$: BehaviorSubject<null | string> = new BehaviorSubject(this.state.checkoutFormState);
 
-  constructor(private dbS: DbService) {
+  constructor(private dbS: DbService, private router: Router) {
     // console.log(clone({ asd: '123' }));
     // this.loadDbRegionsToState();
     // this.loadDbCurrencyAndUsersCountryToState();
     // this.loadDbAccountsToState();
+
+    router.events.subscribe(val => {
+      if(val instanceof NavigationEnd) {
+        this.state.paymentMethod = null;
+        this.paymentMethod$.next(this.state.paymentMethod);
+
+        this.state.checkoutFormState = {};
+        this.checkoutFormState$.next(this.state.checkoutFormState);
+
+        this.state.checkoutFormStateErrorMsg = 'Select payment method';
+        this.checkoutFormStateErrorMsg$.next(this.state.checkoutFormStateErrorMsg);
+      }
+    });
   }
 
-  onCheckoutFormStateChange(state: any, invalid: boolean, paymentMethod: string) {
+  onCheckoutFormStateChange(state: any, valid: boolean, paymentMethod: string) {
+    console.log(valid);
     console.log(paymentMethod)
     this.state.checkoutFormState = state;
     this.state.checkoutFormStateErrorMsg = state;
     if(paymentMethod == '') {
       this.state.checkoutFormStateErrorMsg = 'Select payment method';
       this.state.checkoutFormState = {...state, paymentMethod};
+      this.state.paymentMethod = paymentMethod;
+      this.paymentMethod$.next(this.state.paymentMethod);
       this.checkoutFormStateErrorMsg$.next(this.state.checkoutFormStateErrorMsg);
       this.checkoutFormState$.next(this.state.checkoutFormState);
       return;
     }
 
-    if(invalid) {
+    if(!valid) {
       this.state.checkoutFormStateErrorMsg = 'Fill in the form';
       this.state.checkoutFormState = {...state, paymentMethod};
       this.checkoutFormState$.next(this.state.checkoutFormState);
+      this.state.paymentMethod = paymentMethod;
+      this.paymentMethod$.next(this.state.paymentMethod);
       this.checkoutFormStateErrorMsg$.next(this.state.checkoutFormStateErrorMsg);
       return;
     }
@@ -104,6 +124,8 @@ export class StateService {
     this.state.checkoutFormStateErrorMsg = '';
     this.checkoutFormStateErrorMsg$.next(this.state.checkoutFormStateErrorMsg);
     this.checkoutFormState$.next({...this.state.checkoutFormState, paymentMethod});
+    this.state.paymentMethod = paymentMethod;
+    this.paymentMethod$.next(this.state.paymentMethod);
   }
 
   loadVatRate(countryCode: string) {

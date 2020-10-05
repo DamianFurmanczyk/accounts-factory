@@ -30,6 +30,7 @@ export class CartUiComponent implements OnInit, OnDestroy {
   @Input() buttonDisabled: boolean;
   @Input() currencyExchangeRate: number;
   @Input() currency: string;
+  @Input() paymentMethod: string | null;
   @Input() mediumHideBreakdownFlag: boolean;
   @Input() vat: number;
   @Input() checkoutFormStateErrorMsg = '';
@@ -38,7 +39,6 @@ export class CartUiComponent implements OnInit, OnDestroy {
     if (formState.paymentMethod == "crypto") this.fee = this.cartTotalPrice * .1;
     if (formState.paymentMethod == "paypal") this.fee = this.cartTotalPrice * .029 + .35 * this.currencyExchangeRate;
     if (formState.paymentMethod == "stripe") this.fee = this.cartTotalPrice * .029 + .3 * this.currencyExchangeRate;
-
   }
 
   @Output() addToCart: EventEmitter<account> = new EventEmitter();
@@ -117,11 +117,47 @@ export class CartUiComponent implements OnInit, OnDestroy {
   }
 
   submitPayment() {
-    const jsonCart = JSON.stringify(this.stateS.state.cart.accounts.map(el => {
-      return { ...el, description: null };
+
+    const cartProcessed = this.bulkActiveFlag ? this.stateS.state.bulkCart.accounts : this.stateS.state.cart.accounts;
+    
+
+    const jsonCart = JSON.stringify(cartProcessed.map((el: account) => {
+
+      let price = +el.price_usd * this.currencyExchangeRate;
+
+      if(this.bulkActiveFlag) {
+
+        if(cartProcessed.reduce((prev, next) => { return prev + next.selQuantity }, 0) >= 10) price = el.small * this.currencyExchangeRate;
+        if(cartProcessed.reduce((prev, next) => { return prev + next.selQuantity }, 0) >= 100) price = el.medium * this.currencyExchangeRate;
+        if(cartProcessed.reduce((prev, next) => { return prev + next.selQuantity }, 0) >= 400) price = el.large * this.currencyExchangeRate;
+
+      }
+
+      return { ...el, description: null, price_usd: price, currency: this.currency };
+
     }));
-    console.log(this.stateS.state.checkoutFormState)
-    // this.dbS.payment(jsonCart, this.stateS.state.checkoutFormState);
+
+//     codes_count: 6
+// created_at: null
+// description: "<p>Level 30 Account.</p><p>60 000+ Blue Essence.</p><p>Unranked League All Seasons.</p><p>Fresh MMR.</p><p>Unverified e-mail.</p><p>Ordinary nickname, no bans or reports.</p><p>30 days botting-ban warranty.</p><p>Premium support.</p><p>Instant delivery.</p>"
+// factory: 0
+// id: 111
+// large: 8.99
+// medium: 9.99
+// name: "Premium"
+// price_usd: "16.99"
+// region_id: 5
+// selQuantity: 6
+// slug: "EUNE smurf 50k+"
+// small: 10.99
+// updated_at: "2020-08-09T09:31:07.000000Z"
+
+    console.log(cartProcessed);
+    console.log(jsonCart);
+    console.log(this.stateS.state.checkoutFormState);
+    console.log(this.paymentMethod);
+    this.dbS.payment(jsonCart, this.paymentMethod, this.stateS.state.checkoutFormState.email, 
+      this.stateS.state.checkoutFormState.fullname, this.cartTotalPrice);
   }
 
 }
