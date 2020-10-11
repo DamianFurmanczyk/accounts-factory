@@ -59,15 +59,15 @@
 
       <div class="cart_checkout-separator"></div>
       <p class="cart_checkout-cost">Total cost
-        <span *ngIf="contentType2 != 'checkout'" class="right">{{currencyMap[currency]}} {{cartTotalPrice | toFixed}}</span>
+        <span *ngIf="contentType2 != 'checkout'" class="right">{{currencyMap[currency]}} {{cartTotalPriceSet | toFixed}}</span>
         <span *ngIf="contentType2 == 'checkout'" class="right">
-          {{currencyMap[currency]}} {{cartTotalPrice + cartTotalPrice*(vat/100) + fee | toFixed}}
+          {{currencyMap[currency]}} {{cartTotalPriceSet + cartTotalPriceSet*(vat/100) + fee | toFixed}}
         </span>
       </p>
       <ul *ngIf="contentType2 == 'checkout'" class="cart_total-cost-list">
-        <li>Subtotal <span> {{cartTotalPrice + cartTotalPrice*(vat/100) + fee | toFixed}} </span></li>
+        <li>Subtotal <span> {{cartTotalPriceSet + cartTotalPriceSet*(vat/100) + fee | toFixed}} </span></li>
         <li>Fee <span> {{fee | toFixed}} </span></li>
-        <li>Taxes <span>{{ cartTotalPrice*(vat/100) | toFixed }}</span></li>
+        <li>Taxes <span>{{ cartTotalPriceSet*(vat/100) | toFixed }}</span></li>
       </ul>
 
 

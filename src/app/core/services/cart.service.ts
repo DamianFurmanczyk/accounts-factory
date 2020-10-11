@@ -129,6 +129,7 @@ export class CartStateService {
     console.log(cart.accounts);
     let newTotal = 0;
     cart.accounts.forEach(acc => newTotal += acc.selQuantity * (+acc.price_usd * this.stateS.state.currencyExchangeRateToDollar));
+    console.log(newTotal)
     if(!bulkCartFlag) {
       this.stateS.state.cart.orderPrice = newTotal;
       this.stateS.cartTotalPrice$.next(newTotal);

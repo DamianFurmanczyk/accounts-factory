@@ -13,7 +13,8 @@ export interface account {
     count?: number,
     selQuantity?: number
     codes_count: number
-    from?: string
+    from?: string,
+    price?: number
 }
 
 export interface accountsDataResponse {

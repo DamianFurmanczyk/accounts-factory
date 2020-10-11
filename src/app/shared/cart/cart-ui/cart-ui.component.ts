@@ -17,16 +17,29 @@ import { takeUntil, tap, map } from 'rxjs/operators';
 export class CartUiComponent implements OnInit, OnDestroy {
   @Input() regionIdToNameMap;
   @Input() set contentType(contentType: string) {
+
+    console.log(this.stateS.appropriateCartToShow);
+
     this.contentType2 = contentType;
     if (this.contentType2 == 'checkout') {
       this.cart = this.stateS.appropriateCartToShow == "bulk" ? this.stateS.state.bulkCart : this.stateS.state.cart;
+      this.setCartOrderPriceBasedOnStatesAppropriateCartToShow();
     } else {
       this.cart = this.contentType2 == "bulk" ? this.stateS.state.bulkCart : this.stateS.state.cart;
+      this.setCartOrderPriceBasedOnStatesAppropriateCartToShow();
     }
 
     if (contentType == 'bulk' || this.stateS.appropriateCartToShow == "bulk") this.bulkActiveFlag = true;
   };
-  @Input() cartTotalPrice: number;
+  @Input() set cartTotalPrice(cartTotalPrice: number) {
+    if(this.contentType2 == 'checkout') {
+      console.log('siema')
+      this.setCartOrderPriceBasedOnStatesAppropriateCartToShow();
+    } else {
+      this.cartTotalPriceSet = cartTotalPrice;
+    }
+  }
+  cartTotalPriceSet;
   @Input() buttonDisabled: boolean;
   @Input() currencyExchangeRate: number;
   @Input() currency: string;
@@ -36,15 +49,21 @@ export class CartUiComponent implements OnInit, OnDestroy {
   @Input() checkoutFormStateErrorMsg = '';
   @Input() set checkoutFormState(formState) {
     if (formState == null) return;
-    if (formState.paymentMethod == "crypto") this.fee = this.cartTotalPrice * .1;
-    if (formState.paymentMethod == "paypal") this.fee = this.cartTotalPrice * .029 + .35 * this.currencyExchangeRate;
-    if (formState.paymentMethod == "stripe") this.fee = this.cartTotalPrice * .029 + .3 * this.currencyExchangeRate;
+    if (formState.paymentMethod == "crypto") this.fee = this.cartTotalPriceSet * .1;
+    if (formState.paymentMethod == "paypal") this.fee = this.cartTotalPriceSet * .029 + .35 * this.currencyExchangeRate;
+    if (formState.paymentMethod == "stripe") this.fee = this.cartTotalPriceSet * .029 + .3 * this.currencyExchangeRate;
   }
 
   @Output() addToCart: EventEmitter<account> = new EventEmitter();
   @Output() removeFromCart: EventEmitter<account> = new EventEmitter();
   @Output() changeCartAccountQuantity: EventEmitter<{ account: account, quantity: number }> = new EventEmitter();
   @Output() setAppropriateCartToShow: EventEmitter<void> = new EventEmitter();
+
+  setCartOrderPriceBasedOnStatesAppropriateCartToShow() {
+    console.log('siema2')
+    console.log(this.stateS.appropriateCartToShow)
+    this.cartTotalPriceSet = this.stateS.appropriateCartToShow == "bulk" ? this.stateS.state.bulkCart.orderPrice : this.stateS.state.cart.orderPrice;
+  }
 
   fee = 0;
 
@@ -100,19 +119,20 @@ export class CartUiComponent implements OnInit, OnDestroy {
       console.log(this.bulkActiveFlag)
 
     if (this.bulkActiveFlag) {
-      console.log('bulk')
       return this.stateS.bulkCart$.pipe(
-        takeUntil(this.unsubOnDestruction),
-        map(res => this.cart = res)
+        takeUntil(this.unsubOnDestruction)
       ).subscribe(res => {
         this.cart = res;
+        this.cartTotalPriceSet = this.stateS.state.bulkCart.orderPrice;
+        console.log(res)
       });
     }
     this.stateS.cart$.pipe(
-      takeUntil(this.unsubOnDestruction),
-      map(res => this.cart = res)
-    ).subscribe(res => {
-      this.cart = res;
+      takeUntil(this.unsubOnDestruction)
+      ).subscribe(res => {
+        this.cart = res;
+        this.cartTotalPriceSet = this.stateS.state.cart.orderPrice;
+        console.log(res)
     });
   }
 
@@ -133,7 +153,10 @@ export class CartUiComponent implements OnInit, OnDestroy {
 
       }
 
-      return { ...el, description: null, price_usd: price, currency: this.currency };
+      console.log(price)
+      console.log(price)
+
+      return { ...el, description: null, price: price.toFixed(2), currency: this.currency };
 
     }));
 
@@ -156,8 +179,16 @@ export class CartUiComponent implements OnInit, OnDestroy {
     console.log(jsonCart);
     console.log(this.stateS.state.checkoutFormState);
     console.log(this.paymentMethod);
+
+    
+    console.log(jsonCart)
+    console.log(jsonCart)
+    console.log(jsonCart)
+    console.log(typeof jsonCart)
+    console.log(typeof jsonCart)
+
     this.dbS.payment(jsonCart, this.paymentMethod, this.stateS.state.checkoutFormState.email, 
-      this.stateS.state.checkoutFormState.fullname, this.cartTotalPrice);
+      this.stateS.state.checkoutFormState.fullname, this.cartTotalPriceSet);
   }
 
 }

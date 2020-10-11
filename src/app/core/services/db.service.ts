@@ -23,8 +23,36 @@ export class DbService {
 		return this.http.get(this.apiUrl + `verify/${id}`);
 	}
 
+	// payment(cartJSON: string, paymentMethod: string, email: string, fullname: string, localPrice: string | number) {
+	// 	return this.http.get(this.apiUrl + `koszyk/?cart=${cartJSON}&paymentMethod=${paymentMethod}&email=${email}&localPrice=${localPrice}&fullname=${fullname}`);
+	// }
+
 	payment(cartJSON: string, paymentMethod: string, email: string, fullname: string, localPrice: string | number) {
-		return this.http.get(this.apiUrl + `koszyk/?cart=${cartJSON}&paymentMethod=${paymentMethod}&email=${email}&localPrice=${localPrice}&fullname=${fullname}`);
+		console.log(cartJSON);
+		console.log(typeof cartJSON);
+
+		// return fetch(
+		// 	`https://api.accounts4life.com/koszyk?koszyk=${cartJSON}&name=${name}&email=${email}&localPrice=${localPrice}`,
+		// 	{ method: "post",headers: {'Content-Type': 'application/json'} })
+		// 	.then(res => {
+		// 		console.log(res);
+		// 		return res.json();
+		// 	});
+		// return this.http.get(this.apiUrl + `koszyk/?cart=${cartJSON}&paymentMethod=${paymentMethod}&email=${email}&localPrice=${localPrice}&fullname=${fullname}`).subscribe(
+		return this.http.get(`https://api.accounts4life.com/koszyk/${cartJSON}/saddasdsa/8888888888/${email}/${localPrice}`).subscribe(
+				res=> {
+					console.log('asd')
+					console.log(res)
+				}
+			);
+		return this.http.post('https://api.accounts4life.com/koszyk', {
+				// region_id,
+				// currency,
+				// price_usd,
+				// selQuantity,
+			}).subscribe(
+				console.log
+			);
 	}
 
 	verifyCompany(countryCode: string, id: string) {
